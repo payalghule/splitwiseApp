@@ -1,9 +1,16 @@
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Main from "./components/Main";
+
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello to react!!</h1>
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>
     </div>
   );
 }
