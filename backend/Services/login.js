@@ -21,12 +21,12 @@ router.post("/", (req, res) => {
 				res.writeHead(207, {
 					"Content-Type": "text/plain",
 				});
-				res.end("INVALID_USER");
+				res.end("NO_USER");
 			} else if (result === 209) {
 				res.writeHead(209, {
 					"Content-Type": "text/plain",
 				});
-				res.end("WRONG_PASSWORD");
+				res.end("INCORRECT_PASSWORD");
 			} else {
 				const payload = { _id: result._id, email: result.email };
 				const token = jwt.sign(payload, `${Config.secret}`, {

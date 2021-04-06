@@ -1,13 +1,13 @@
 /* eslint-disable */
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import { userLogin } from '../../redux/actions/loginAction';
-import PropTypes from 'prop-types';
-import logo from '../../images/logo.png';
-import NavbarLogin from '../Layout/NavbarLogin';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
+import { userLogin } from "../../redux/actions/loginAction";
+import PropTypes from "prop-types";
+import logo from "../../images/logo.png";
+import NavbarLogin from "../Layout/NavbarLogin";
 
-import '../../App.css';
+import "../../App.css";
 
 class Login extends Component {
 	constructor(props) {
@@ -24,7 +24,7 @@ class Login extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 
-		console.log('Client Log: In Login');
+		console.log("Client Log: In Login");
 
 		const loginData = {
 			email: this.state.email,
@@ -40,21 +40,21 @@ class Login extends Component {
 
 	render() {
 		let redirectVar = null;
-		let displayMessage = '';
+		let displayMessage = "";
 		if (this.props.user && this.props.user.userid) {
-			localStorage.setItem('userid', this.props.user.userid);
-			localStorage.setItem('email', this.props.user.email);
-			localStorage.setItem('username', this.props.user.username);
-			console.log('Redirecting to home');
+			localStorage.setItem("userid", this.props.user.userid);
+			localStorage.setItem("email", this.props.user.email);
+			localStorage.setItem("username", this.props.user.username);
+			console.log("Redirecting to home");
 			redirectVar = <Redirect to="/DashBoard" />;
 		} else if (this.props.user) {
-			if (this.props.user.errMsg === 'NO_USER' && this.state.loginFlag) {
-				displayMessage = 'No user with given email id/password';
+			if (this.props.user === "NO_USER" && this.state.loginFlag) {
+				displayMessage = "No user with given email id/password";
 			} else if (
-				this.props.user.errMsg === 'INCORRECT_PASSWORD' &&
+				this.props.user === "INCORRECT_PASSWORD" &&
 				this.state.loginFlag
 			) {
-				displayMessage = 'Password is incorrect';
+				displayMessage = "Password is incorrect";
 			}
 		}
 		return (
@@ -96,7 +96,7 @@ class Login extends Component {
 									<button type="submit" className="login-orange-button">
 										Log in
 									</button>
-									<div style={{ color: '#ff0000' }}>{displayMessage}</div>
+									<div style={{ color: "#ff0000" }}>{displayMessage}</div>
 								</form>
 							</div>
 						</div>
