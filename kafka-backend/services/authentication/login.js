@@ -22,7 +22,6 @@ function handle_request(message, callback) {
 					callback(null, 500);
 				} else {
 					if (isPasswordTrue) {
-						//delete user.password;
 						callback(null, user);
 					} else {
 						callback(null, 209);
