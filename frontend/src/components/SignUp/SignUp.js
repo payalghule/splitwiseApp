@@ -1,11 +1,11 @@
 /* eslint-disable */
-import React, { Component } from 'react';
-import userSignup from '../../redux/actions/signupAction';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
-import logo from '../../images/logo.png';
-import '../../App.css';
+import React, { Component } from "react";
+import userSignup from "../../redux/actions/signupAction";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
+import logo from "../../images/logo.png";
+import "../../App.css";
 
 class SignUp extends Component {
 	constructor(props) {
@@ -22,7 +22,7 @@ class SignUp extends Component {
 
 	handleSignUp = (e) => {
 		e.preventDefault();
-		console.log('In handleSignUp');
+		console.log("In handleSignUp");
 
 		const signUpData = {
 			username: this.state.username,
@@ -30,7 +30,7 @@ class SignUp extends Component {
 			password: this.state.password,
 		};
 
-		console.log('signup data received in client', signUpData);
+		console.log("signup data received in client", signUpData);
 		this.props.userSignup(signUpData);
 		this.setState({
 			signupFlag: 1,
@@ -39,22 +39,19 @@ class SignUp extends Component {
 
 	render() {
 		let redirectVar = null;
-		let displayMessage = '';
-		console.log('this.props.user', this.props.user);
+		let displayMessage = "";
+		console.log("this.props.user", this.props.user);
 		if (this.props.user) {
-			if (this.props.user.sucMsg === 'USER_ADDED' && this.state.signupFlag) {
-				console.log('Redirecting to Dashboard');
-				localStorage.setItem('userid', this.props.user.userid);
-				localStorage.setItem('email', this.props.user.email);
+			if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
+				console.log("Redirecting to Dashboard");
+				localStorage.setItem("userid", this.props.user.userid);
+				localStorage.setItem("email", this.props.user.email);
 				redirectVar = <Redirect to="/DashBoard" />;
-			} else if (
-				this.props.user.errMsg === 'EMAIL_EXIST' &&
-				this.state.signupFlag
-			) {
+			} else if (this.props.user === "EMAIL_EXIST" && this.state.signupFlag) {
 				displayMessage =
-					'This Email id is already registered with us, Please use different Email id';
-			} else if (this.props.user.errMsg === 'INSERT_ERROR') {
-				displayMessage = 'Something went wrong';
+					"This Email id is already registered with us, Please use different Email id";
+			} else if (this.props.user === "SERVER_ERROR") {
+				displayMessage = "Something went wrong";
 			}
 		}
 		return (
@@ -107,7 +104,7 @@ class SignUp extends Component {
 								/>
 							</div>
 							<button className="login-orange-button">Sign up</button>
-							<div style={{ color: '#ff0000' }}>{displayMessage}</div>
+							<div style={{ color: "#ff0000" }}>{displayMessage}</div>
 						</form>
 					</div>
 				</div>

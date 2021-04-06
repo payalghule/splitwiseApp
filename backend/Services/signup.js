@@ -9,17 +9,17 @@ router.post("/", (req, res) => {
 			res.writeHead(500, {
 				"Content-Type": "text/plain",
 			});
-			res.end("Server Side Error");
+			res.end("SERVER_ERROR");
 		} else if (result === 299) {
 			res.writeHead(299, {
 				"Content-Type": "text/plain",
 			});
-			res.end("User exists");
+			res.end("EMAIL_EXIST");
 		} else if (result === 200) {
 			res.writeHead(200, {
 				"Content-Type": "text/plain",
 			});
-			res.end("User Registered");
+			res.end("USER_ADDED");
 		}
 	});
 });
