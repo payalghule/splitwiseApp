@@ -41,8 +41,9 @@ class Login extends Component {
 	render() {
 		let redirectVar = null;
 		let displayMessage = "";
-		if (this.props.user && this.props.user.userid) {
-			localStorage.setItem("userid", this.props.user.userid);
+		console.log("this.props.user", this.props.user);
+		if (this.props.user && this.props.user._id) {
+			localStorage.setItem("userid", this.props.user._id);
 			localStorage.setItem("email", this.props.user.email);
 			localStorage.setItem("username", this.props.user.username);
 			console.log("Redirecting to home");

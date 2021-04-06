@@ -7,7 +7,7 @@ const cors = require("cors");
 
 const bcrypt = require("bcrypt");
 const Config = require("./config");
-//const mongoConnection = require('./database');
+//const mongoConnection = require("./database");
 //var kafka = require('./kafka/client');
 
 const app = express();
@@ -54,11 +54,12 @@ app.use(express.static("./public"));
 //app.post("/signup", signupRouter.UserSignUp);
 
 const signup = require("./Services/signup");
-
 const login = require("./Services/login");
-app.use("/signup", signup);
+const profile = require("./Services/profile");
 
+app.use("/signup", signup);
 app.use("/login", login);
+app.use("/profile", profile);
 
 const server = app.listen(3001, () => {
 	console.log("Server listening on port 3001");
