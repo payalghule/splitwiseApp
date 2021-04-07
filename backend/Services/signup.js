@@ -15,11 +15,11 @@ router.post("/", (req, res) => {
 				"Content-Type": "text/plain",
 			});
 			res.end("EMAIL_EXIST");
-		} else if (result === 200) {
+		} else {
 			res.writeHead(200, {
 				"Content-Type": "text/plain",
 			});
-			res.end("USER_ADDED");
+			res.end(JSON.stringify(result));
 		}
 	});
 });

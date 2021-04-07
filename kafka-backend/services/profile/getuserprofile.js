@@ -1,9 +1,9 @@
 const Users = require("../../Models/UserModel");
-const { ObjectId } = require("mongodb");
+//const { ObjectId } = require("mongodb");
 function handle_request(message, callback) {
 	console.log("-----------In Kafka backend:getuserprofile---------------");
 	console.log("message is:", message);
-	Users.findOne({ _id: ObjectId(message.userId) }, (err, user) => {
+	Users.findById({ _id: message.userId }, (err, user) => {
 		if (err) {
 			callback(null, 500);
 		} else if (user == null) {

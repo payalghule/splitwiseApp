@@ -2,7 +2,8 @@
 const Users = require("../../Models/UserModel");
 
 function handle_request(msg, callback) {
-	console.log("inside update user service kafka backend", msg);
+	console.log("-----------In Kafka backend:updateuser---------------");
+	console.log("message is", msg);
 	// let username = msg.name;
 	// console.log("name is", username);
 	// console.log(msg.phone_number);

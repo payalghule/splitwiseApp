@@ -42,10 +42,11 @@ class SignUp extends Component {
 		let displayMessage = "";
 		console.log("this.props.user", this.props.user);
 		if (this.props.user) {
-			if (this.props.user === "USER_ADDED" && this.state.signupFlag) {
+			if (this.props.user && this.props.user.userid) {
 				console.log("Redirecting to Dashboard");
 				localStorage.setItem("userid", this.props.user.userid);
 				localStorage.setItem("email", this.props.user.email);
+				localStorage.setItem("username", this.props.user.username);
 				redirectVar = <Redirect to="/DashBoard" />;
 			} else if (this.props.user === "EMAIL_EXIST" && this.state.signupFlag) {
 				displayMessage =

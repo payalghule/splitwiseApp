@@ -1,6 +1,6 @@
-'use strict';
-const bcrypt = require('bcrypt');
-const Users = require('../../Models/UserModel');
+"use strict";
+const bcrypt = require("bcrypt");
+const Users = require("../../Models/UserModel");
 const saltRounds = 10;
 
 function handle_request(msg, callback) {
@@ -20,7 +20,7 @@ function handle_request(msg, callback) {
 			bcrypt.hash(password, saltRounds, (error, hash) => {
 				if (error) {
 					console.log(error);
-					callback(null, 'Hashing Error');
+					callback(null, "Hashing Error");
 				}
 
 				let userToCreate = Users({
@@ -34,8 +34,14 @@ function handle_request(msg, callback) {
 						console.log(`Saving Error in Signup: ${error}`);
 						callback(null, 500);
 					}
-					console.log('Successfully Created');
-					callback(null, 200);
+					console.log("Id of inserted document after:", userToCreate._id);
+					console.log("Successfully Created");
+					let userToSend = {
+						email: email,
+						username: username,
+						userid: userToCreate._id,
+					};
+					callback(null, userToSend);
 				});
 			});
 		}
