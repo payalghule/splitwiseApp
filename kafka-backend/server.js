@@ -25,6 +25,8 @@ connectMongoDB();
 // topics files
 const signup = require("./services/authentication/signup");
 const login = require("./services/authentication/login");
+const getuserprofile = require("./services/profile/getuserprofile");
+const updateuser = require("./services/profile/updateuser");
 
 function handleTopicRequest(topic_name, fname) {
 	var consumer = connection.getConsumer(topic_name);
@@ -93,3 +95,5 @@ function response(data, res, producer) {
 //second argument is a function that will handle this topic request
 handleTopicRequest("signup", signup);
 handleTopicRequest("login", login);
+handleTopicRequest("getuserprofile", getuserprofile);
+handleTopicRequest("updateuser", updateuser);
