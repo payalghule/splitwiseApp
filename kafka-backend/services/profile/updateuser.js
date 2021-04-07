@@ -4,11 +4,8 @@ const Users = require("../../Models/UserModel");
 function handle_request(msg, callback) {
 	console.log("-----------In Kafka backend:updateuser---------------");
 	console.log("message is", msg);
-	// let username = msg.name;
-	// console.log("name is", username);
-	// console.log(msg.phone_number);
 
-	Users.findOne({ email: msg.email }, (err, user) => {
+	Users.findById({ _id: msg.userid }, (err, user) => {
 		console.log("get user result is:", user);
 
 		if (err) {

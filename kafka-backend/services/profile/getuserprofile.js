@@ -3,7 +3,7 @@ const Users = require("../../Models/UserModel");
 function handle_request(message, callback) {
 	console.log("-----------In Kafka backend:getuserprofile---------------");
 	console.log("message is:", message);
-	Users.findById({ _id: message.userId }, (err, user) => {
+	Users.findById({ _id: message.userid }, (err, user) => {
 		if (err) {
 			callback(null, 500);
 		} else if (user == null) {
