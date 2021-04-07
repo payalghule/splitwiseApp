@@ -10,7 +10,7 @@ const usersSchema = new Schema(
 		currency: { type: String, default: "USD" },
 		timezone: { type: String, default: "Pacific time" },
 		language: { type: String, default: "English" },
-		profilePhoto: { type: String },
+		user_image: { type: String },
 	},
 	{
 		versionKey: false,

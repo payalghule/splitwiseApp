@@ -30,7 +30,7 @@ router.post("/:user_id", (req, res) => {
 		console.log("file name is:", req.file.filename);
 		console.log("params", req.params);
 		kafka.make_request(
-			"image",
+			"images",
 			{ body: req.params, filename: req.file.filename },
 			(err, result) => {
 				console.log("Image Details:", result);

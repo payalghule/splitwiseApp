@@ -27,6 +27,7 @@ const signup = require("./services/authentication/signup");
 const login = require("./services/authentication/login");
 const getuserprofile = require("./services/profile/getuserprofile");
 const updateuser = require("./services/profile/updateuser");
+const images = require("./services/profile/images");
 
 function handleTopicRequest(topic_name, fname) {
 	var consumer = connection.getConsumer(topic_name);
@@ -97,3 +98,4 @@ handleTopicRequest("signup", signup);
 handleTopicRequest("login", login);
 handleTopicRequest("getuserprofile", getuserprofile);
 handleTopicRequest("updateuser", updateuser);
+handleTopicRequest("images", images);
