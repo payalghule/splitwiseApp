@@ -15,25 +15,41 @@ function handle_request(msg, callback) {
 			console.log("unable to fetch user details");
 			callback(null, 207);
 		} else {
-			console.log("update user details from DB", user);
-			console.log("User name is:", msg.username);
-			user.username = msg.username;
-			user.email = msg.email;
-			user.phone = msg.phone;
-			user.currency = msg.currency;
-			user.language = msg.language;
-			user.timezone = msg.timezone;
+			Users.find(
+				{ _id: { $ne: msg.userid }, email: msg.email },
+				(err, result) => {
+					if (err) {
+						console.log("server error:", err);
+						callback(null, 500);
+					}
+					console.log("Result for checking email: ", result);
+					if (result.length > 0) {
+						console.log(`Email ${msg.email} already exists`);
+						callback(null, 299);
+					} else {
+						//update user
+						console.log("update user details from DB", user);
+						console.log("User name is:", msg.username);
+						user.username = msg.username;
+						user.email = msg.email;
+						user.phone = msg.phone;
+						user.currency = msg.currency;
+						user.language = msg.language;
+						user.timezone = msg.timezone;
 
-			console.log("Save user information:", user);
-			user.save((error) => {
-				if (error) {
-					console.log(`Saving Error in update profile: ${error}`);
-					callback(null, 500);
+						console.log("Save user information:", user);
+						user.save((error) => {
+							if (error) {
+								console.log(`Saving Error in update profile: ${error}`);
+								callback(null, 500);
+							}
+							console.log("Successfully Updated");
+							//callback(null, 200);
+							callback(null, user);
+						});
+					}
 				}
-				console.log("Successfully Updated");
-				//callback(null, 200);
-				callback(null, user);
-			});
+			);
 		}
 	});
 }

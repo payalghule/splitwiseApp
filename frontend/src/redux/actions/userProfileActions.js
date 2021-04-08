@@ -29,6 +29,8 @@ export const updateUser = (userProfileData) => (dispatch) => {
 				alert("Update Failed! Please Try Again");
 			} else if (response.status === 207) {
 				alert("No User Found");
+			} else if (response.status === 299) {
+				alert("EmailId already exists, use another emailId");
 			} else {
 				alert("Server Error!");
 			}
