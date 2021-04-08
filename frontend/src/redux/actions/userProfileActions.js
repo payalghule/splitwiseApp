@@ -21,15 +21,20 @@ export const updateUser = (userProfileData) => (dispatch) => {
 	axios.defaults.withCredentials = true;
 	axios
 		.post(`${backendServer}/profile/updateuser`, userProfileData)
-		.then((response) => response.data)
-		.then((data) => {
-			if (data === "USER_UPDATED") {
-				localStorage.setItem("username", userProfileData.username);
-				alert("Profile Updated Successfully!");
+		.then((response) => {
+			console.log("response for update profile is", response);
+			if (response.status === 200) {
+				alert("User Profile updated successfully!");
+			} else if (response.status === 209) {
+				alert("Update Failed! Please Try Again");
+			} else if (response.status === 207) {
+				alert("No User Found");
+			} else {
+				alert("Server Error!");
 			}
 			return dispatch({
 				type: UPDATE_USER,
-				payload: data,
+				payload: response.data,
 			});
 		})
 		.catch((error) => {
