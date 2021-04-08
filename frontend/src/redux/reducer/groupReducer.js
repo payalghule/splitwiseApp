@@ -11,7 +11,7 @@ export default function groupReducer(state = initialState, action) {
 			return {
 				...state,
 				allUsers: action.payload,
-				//groupCreation: null,
+				groupCreation: null,
 			};
 		case CREATE_GROUP:
 			return {

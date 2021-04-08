@@ -83,7 +83,12 @@ class Group extends Component {
 	render() {
 		let details = this.state.userData;
 		let redirectVar = null;
-		console.log("group creation status:", this.props.groupCreation);
+		console.log(
+			"group creation status:",
+			this.props.groupCreation,
+			"flag: ",
+			this.state.groupCreatedFlag
+		);
 		if (
 			this.props.groupCreation === "GROUP_ADDED" &&
 			this.state.groupCreatedFlag
