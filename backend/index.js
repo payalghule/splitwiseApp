@@ -58,12 +58,14 @@ const login = require("./Services/login");
 const profile = require("./Services/profile");
 const uploads = require("./Services/uploads");
 const images = require("./Services/images");
+const groups = require("./Services/groups");
 
 app.use("/signup", signup);
 app.use("/login", login);
 app.use("/profile", profile);
 app.use("/uploads", uploads);
 app.use("/images", images);
+app.use("/groups", groups);
 
 const server = app.listen(3001, () => {
 	console.log("Server listening on port 3001");
