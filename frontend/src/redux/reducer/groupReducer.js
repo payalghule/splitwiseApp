@@ -2,7 +2,7 @@ import { GET_ALL_USER, CREATE_GROUP } from "../actions/types";
 
 const initialState = {
 	allUsers: {},
-	createGroup: {},
+	groupCreation: {},
 };
 
 export default function groupReducer(state = initialState, action) {
@@ -11,11 +11,12 @@ export default function groupReducer(state = initialState, action) {
 			return {
 				...state,
 				allUsers: action.payload,
+				//groupCreation: null,
 			};
 		case CREATE_GROUP:
 			return {
 				...state,
-				createGroup: action.payload,
+				groupCreation: action.payload,
 			};
 		default:
 			return state;

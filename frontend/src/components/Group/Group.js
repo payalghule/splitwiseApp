@@ -24,8 +24,8 @@ class Group extends Component {
 			selectedValue: [
 				{
 					_id: localStorage.getItem("userid"),
-					username: localStorage.getItem("username"),
 					email: localStorage.getItem("email"),
+					username: localStorage.getItem("username"),
 				},
 			],
 			groupCreatedFlag: 0,
@@ -62,46 +62,18 @@ class Group extends Component {
 		};
 		console.log("Data sending to server from Create Group page:", newGroupData);
 		this.props.createGroup(newGroupData);
-		// axios.defaults.withCredentials = true;
-		// axios
-		// 	.post(`${backendServer}/groups/creategroup`, newGroupData)
-		// 	.then((response) => {
-		// 		console.log("response after post", response);
-		// 		if (response.status == 200 && response.data === "GROUP_ADDED") {
-		// 			this.setState({
-		// 				groupCreatedFlag: 1,
-		// 			});
-		// 			alert("Group created sucessfully!");
-		// 		}
-		// 	})
-		// 	.catch((error) => {
-		// 		alert("Group name already exists!");
-		// 		console.log("error:", error);
-		// 	});
+		this.setState({
+			groupCreatedFlag: 1,
+		});
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.getAllUsers();
 		console.log("all users: ", this.props.allUsers);
-		// this.setState({
-		// 	userData: this.state.userData.concat(nextProps.user),
-		// });
-		// axios.defaults.withCredentials = true;
-		// axios
-		// 	.get(`${backendServer}/groups/getUser`)
-		// 	.then((response) => {
-		// 		console.log("data is", response.data);
-		// 		this.setState({
-		// 			userData: this.state.userData.concat(response.data),
-		// 		});
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log("error occured while connecting to backend:", error);
-		// 	});
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log("nextProps.user", nextProps.allUsers);
+		console.log("nextProps.allUsers", nextProps.allUsers);
 
 		this.setState({
 			userData: this.state.userData.concat(nextProps.allUsers),
@@ -111,8 +83,11 @@ class Group extends Component {
 	render() {
 		let details = this.state.userData;
 		let redirectVar = null;
-		console.log(this.state.groupCreatedFlag);
-		if (this.state.groupCreatedFlag) {
+		console.log("group creation status:", this.props.groupCreation);
+		if (
+			this.props.groupCreation === "GROUP_ADDED" &&
+			this.state.groupCreatedFlag
+		) {
 			console.log("Redirecting to MyGroups Page...");
 			redirectVar = <Redirect to="/MyGroups" />;
 		}
@@ -182,12 +157,12 @@ Group.propTypes = {
 	getAllUsers: PropTypes.func.isRequired,
 	createGroup: PropTypes.func.isRequired,
 	allUsers: PropTypes.object.isRequired,
-	createGroup: PropTypes.object.isRequired,
+	groupCreation: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
 	allUsers: state.createGroup.allUsers,
-	createGroup: state.createGroup.createGroup,
+	groupCreation: state.createGroup.groupCreation,
 });
 
 export default connect(mapStateToProps, { getAllUsers, createGroup })(Group);

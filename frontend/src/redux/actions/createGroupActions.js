@@ -8,7 +8,7 @@ export const getAllUsers = () => (dispatch) => {
 	axios
 		.get(`${backendServer}/groups/getallusers`)
 		.then((response) => {
-			console.log("response from get User Emails", response.data);
+			console.log("Actions::response from get User Emails", response.data);
 			dispatch({
 				type: GET_ALL_USER,
 				payload: response.data,
@@ -25,7 +25,7 @@ export const createGroup = (groupDetails) => (dispatch) => {
 	axios
 		.post(`${backendServer}/groups/creategroup`, groupDetails)
 		.then((response) => {
-			console.log("response for update profile is", response.status);
+			console.log("Actions::response for creategroup is", response.status);
 			if (response.status === 200) {
 				alert("Group created successfully!");
 			} else if (response.status === 299) {
