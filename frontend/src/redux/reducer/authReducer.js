@@ -12,10 +12,7 @@ export default function authReducer(state = initialState, action) {
 				user: action.payload,
 			};
 		// case USER_LOGOUT:
-		// 	return {
-		// 		//state = undefined;
-		// 		//initialState,
-		// 	};
+		// 	return {};
 
 		case USER_SIGNUP:
 			return {

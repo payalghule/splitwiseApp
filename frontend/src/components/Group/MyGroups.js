@@ -14,7 +14,7 @@ class MyGroups extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			allGroupNames: [],
+			allGroupData: [],
 			userId: localStorage.getItem("userid"),
 			search: "",
 		};
@@ -31,6 +31,15 @@ class MyGroups extends Component {
 		const memData = { groupMember: this.state.userId };
 		console.log("Member Data : ", memData);
 		this.groupLoad(memData);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		console.log("nextProps.allGroups", nextProps.allGroups);
+
+		this.setState({
+			allGroupData: this.state.allGroupData.concat(nextProps.allGroups),
+		});
+		console.log("allGroupData:", this.state.allGroupData);
 	}
 
 	groupLoad = (memData) => {
@@ -56,8 +65,8 @@ class MyGroups extends Component {
 	};
 
 	render() {
-		console.log("this.props.allGroups: ", this.props.allGroups);
-		let list = this.props.allGroups;
+		console.log("this.state.allGroupData: ", this.state.allGroupData);
+		let list = this.state.allGroupData;
 		const { search } = this.state;
 
 		const groupList = list.filter((group) => {
