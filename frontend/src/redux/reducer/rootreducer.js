@@ -2,11 +2,13 @@ import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 import userProfileReducer from "./userProfileReducer";
 import groupReducer from "./groupReducer";
+import myGroupsReducer from "./myGroupsReducer";
 
 const appReducer = combineReducers({
 	authuser: authReducer,
 	userProfile: userProfileReducer,
 	createGroup: groupReducer,
+	myGroups: myGroupsReducer,
 });
 
 const rootReducer = (state, action) => {

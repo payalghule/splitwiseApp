@@ -5,3 +5,5 @@ export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const GET_ALL_USER = "GET_ALL_USER";
 export const CREATE_GROUP = "CREATE_GROUP";
+export const GET_ALL_GROUPS = "GET_ALL_GROUPS";
+export const JOIN_GROUP = "JOIN_GROUP";

@@ -30,6 +30,8 @@ const updateuser = require("./services/profile/updateuser");
 const images = require("./services/profile/images");
 const creategroup = require("./services/group/creategroup");
 const getallusers = require("./services/group/getallusers");
+const getallgroups = require("./services/group/getallgroups");
+//const joinstatus = require("./services/group/joinstatus");
 
 function handleTopicRequest(topic_name, fname) {
 	var consumer = connection.getConsumer(topic_name);
@@ -103,3 +105,4 @@ handleTopicRequest("updateuser", updateuser);
 handleTopicRequest("images", images);
 handleTopicRequest("creategroup", creategroup);
 handleTopicRequest("getallusers", getallusers);
+handleTopicRequest("getallgroups", getallgroups);
