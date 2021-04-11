@@ -74,7 +74,7 @@ router.post("/getallgroups", (req, res) => {
 	});
 });
 
-router.get("/joingroup", (req, res) => {
+router.post("/joingroup", (req, res) => {
 	console.log("Backend :: inside joingroup ::MyGroups ");
 	kafka.make_request("joingroup", req.body, (err, result) => {
 		console.log("group details:", result);

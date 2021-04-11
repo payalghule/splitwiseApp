@@ -47,8 +47,10 @@ class MyGroups extends Component {
 	};
 	//to change the isAccepted status true
 	onJoinClick = (gName) => {
-		// console.log(gName);
-		// const groupData = { groupName: gName, groupMember: this.state.userId };
+		console.log(gName);
+		const groupData = { groupName: gName, groupMember: this.state.userId };
+		this.props.joinGroup(groupData);
+
 		// axios.defaults.withCredentials = true;
 		// axios
 		// 	.post(`${backendServer}/groups/joingroup`, groupData)
@@ -108,7 +110,7 @@ class MyGroups extends Component {
 								</div>
 								<div>
 									{groupList.map((group) =>
-										group.isAccepted === 0 ? (
+										group.groupMembers[0].isAccepted === 0 ? (
 											<div
 												className="list-group list-group-horizontal"
 												key={group.groupName}
@@ -159,11 +161,11 @@ class MyGroups extends Component {
 
 MyGroups.propTypes = {
 	getAllGroups: PropTypes.func.isRequired,
-	//	joinGroup: PropTypes.func.isRequired,
+	joinGroup: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
 	allGroups: state.myGroups.allGroups,
-	//	groupJoinStatus: state.myGroups.groupJoinStatus,
+	groupJoinStatus: state.myGroups.groupJoinStatus,
 });
 
-export default connect(mapStateToProps, { getAllGroups })(MyGroups);
+export default connect(mapStateToProps, { getAllGroups, joinGroup })(MyGroups);

@@ -19,11 +19,11 @@ export const getAllGroups = (memData) => (dispatch) => {
 		});
 };
 
-export const joinGroup = () => (dispatch) => {
+export const joinGroup = (groupData) => (dispatch) => {
 	console.log("Inside joinGroup actions");
 	axios.defaults.withCredentials = true;
 	axios
-		.post(`${backendServer}/groups/joingroup`)
+		.post(`${backendServer}/groups/joingroup`, groupData)
 		.then((response) => {
 			console.log("Actions::response from joinGroup", response.data);
 			dispatch({

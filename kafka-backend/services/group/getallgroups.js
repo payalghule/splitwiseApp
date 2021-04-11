@@ -5,8 +5,12 @@ function handle_request(msg, callback) {
 	console.log("---------------Kafka backend :: getallgroups----------------");
 	console.log("Message is: ", msg);
 	Groups.find(
-		{ groupMembers: msg.groupMember },
-		{ _id: 1, groupName: 1, isAccepted: 1 },
+		{ "groupMembers._id": msg.groupMember },
+		{
+			_id: 1,
+			groupName: 1,
+			groupMembers: { $elemMatch: { _id: msg.groupMember } },
+		},
 		(err, allGroups) => {
 			console.log("getallgroups result is:", allGroups);
 
