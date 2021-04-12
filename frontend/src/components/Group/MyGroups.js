@@ -35,40 +35,48 @@ class MyGroups extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		console.log("nextProps.allGroups", nextProps.allGroups);
-
+		// if (nextProps.allGroups) {
+		// 	let { allGroups } = nextProps;
+		// }
 		this.setState({
-			allGroupData: this.state.allGroupData.concat(nextProps.allGroups),
+			allGroupData: nextProps.allGroups,
 		});
 		console.log("allGroupData:", this.state.allGroupData);
 	}
+	// static getDerivedStateFromProps(props, state) {
+	// 	console.log(
+	// 		"getDerivedStateFromProps: props is",
+	// 		props,
+	// 		"state is:",
+	// 		state
+	// 	);
+	// 	return {
+	// 		allGroupData: props.allGroups,
+	// 	};
+	// }
 
 	groupLoad = (memData) => {
+		console.log("All group Data load");
 		this.props.getAllGroups(memData);
 	};
 	//to change the isAccepted status true
-	onJoinClick = (gName) => {
-		console.log(gName);
-		const groupData = { groupName: gName, groupMember: this.state.userId };
+	onJoinClick = (gId, gName) => {
+		const groupData = {
+			groupId: gId,
+			groupName: gName,
+			groupMember: this.state.userId,
+		};
+		const memData = { groupMember: this.state.userId };
+		console.log(groupData);
 		this.props.joinGroup(groupData);
-
-		// axios.defaults.withCredentials = true;
-		// axios
-		// 	.post(`${backendServer}/groups/joingroup`, groupData)
-		// 	.then((response) => {
-		// 		console.log("Response after Axios call", response);
-		// 		if (response.status == 200 && response.data === "JOINED_GROUP") {
-		// 			alert("Joined group successfully!");
-		// 			window.location.reload(false);
-		// 		}
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log("error occured while connecting to backend:", error);
-		// 	});
+		this.groupLoad(memData);
 	};
 
 	render() {
 		console.log("this.state.allGroupData: ", this.state.allGroupData);
 		let list = this.state.allGroupData;
+		// console.log("this.props.allGroups: ", this.props.allGroups);
+		// let list = this.props.allGroups;
 		const { search } = this.state;
 
 		const groupList = list.filter((group) => {
@@ -113,7 +121,7 @@ class MyGroups extends Component {
 										group.groupMembers[0].isAccepted === 0 ? (
 											<div
 												className="list-group list-group-horizontal"
-												key={group.groupName}
+												key={group._id}
 											>
 												<Link
 													className="list-group-item list-group-item-action disabled"
@@ -126,7 +134,9 @@ class MyGroups extends Component {
 												<span>
 													<button
 														className="green-button"
-														onClick={() => this.onJoinClick(group.groupName)}
+														onClick={() =>
+															this.onJoinClick(group._id, group.groupName)
+														}
 													>
 														Join Group
 													</button>
@@ -135,7 +145,7 @@ class MyGroups extends Component {
 										) : (
 											<div
 												className="list-group list-group-horizontal"
-												key={group.groupName}
+												key={group._id}
 											>
 												<Link
 													className="list-group-item list-group-item-action"
