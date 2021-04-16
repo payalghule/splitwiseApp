@@ -116,48 +116,54 @@ class MyGroups extends Component {
 										</form>
 									</div>
 								</div>
-								<div>
-									{groupList.map((group) =>
-										group.groupMembers[0].isAccepted === 0 ? (
-											<div
-												className="list-group list-group-horizontal"
-												key={group._id}
-											>
-												<Link
-													className="list-group-item list-group-item-action disabled"
-													style={{ width: "80%", marginRight: "10px" }}
-													to={`/groups/${group.groupName}`}
+								{groupList && groupList.length > 0 ? (
+									<div>
+										{groupList.map((group) =>
+											group.groupMembers[0].isAccepted === 0 ? (
+												<div
+													className="list-group list-group-horizontal"
+													key={group._id}
 												>
-													{group.groupName}
-												</Link>
-
-												<span>
-													<button
-														className="green-button"
-														onClick={() =>
-															this.onJoinClick(group._id, group.groupName)
-														}
+													<Link
+														className="list-group-item list-group-item-action disabled"
+														style={{ width: "80%", marginRight: "10px" }}
+														to={`/groups/${group.groupName}`}
 													>
-														Join Group
-													</button>
-												</span>
-											</div>
-										) : (
-											<div
-												className="list-group list-group-horizontal"
-												key={group._id}
-											>
-												<Link
-													className="list-group-item list-group-item-action"
-													style={{ width: "80%", marginRight: "10px" }}
-													to={`/groups/${group.groupName}`}
+														{group.groupName}
+													</Link>
+
+													<span>
+														<button
+															className="green-button"
+															onClick={() =>
+																this.onJoinClick(group._id, group.groupName)
+															}
+														>
+															Join Group
+														</button>
+													</span>
+												</div>
+											) : (
+												<div
+													className="list-group list-group-horizontal"
+													key={group._id}
 												>
-													{group.groupName}
-												</Link>
-											</div>
-										)
-									)}
-								</div>
+													<Link
+														className="list-group-item list-group-item-action"
+														style={{ width: "80%", marginRight: "10px" }}
+														to={`/groups/${group.groupName}`}
+													>
+														{group.groupName}
+													</Link>
+												</div>
+											)
+										)}
+									</div>
+								) : (
+									<div>
+										<h4>There are no groups present</h4>
+									</div>
+								)}
 							</div>
 						</div>
 
