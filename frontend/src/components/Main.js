@@ -8,7 +8,7 @@ import DashBoard from "./DashBoard/DashBoard";
 import Profile from "./Profile/Profile";
 import Group from "./Group/Group";
 import MyGroups from "./Group/MyGroups";
-// import ShowGroups from './Group/ShowGroup';
+import ShowGroups from "./Group/ShowGroup";
 // import RecentActivity from './DashBoard/RecentActivity';
 
 const Main = () => {
@@ -21,6 +21,7 @@ const Main = () => {
 			<Route path="/Profile" component={Profile} />
 			<Route path="/Group" component={Group} />
 			<Route path="/MyGroups" component={MyGroups} />
+			<Route path="/groups/:groupName" component={ShowGroups} />
 		</div>
 	);
 };
