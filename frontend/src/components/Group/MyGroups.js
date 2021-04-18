@@ -111,7 +111,10 @@ class MyGroups extends Component {
 													<Link
 														className="list-group-item list-group-item-action disabled"
 														style={{ width: "80%", marginRight: "10px" }}
-														to={`/groups/${group.groupName}`}
+														to={{
+															pathname: `/groups/${group.groupName}`,
+															state: { groupId: group._id },
+														}}
 													>
 														{group.groupName}
 													</Link>
@@ -135,7 +138,10 @@ class MyGroups extends Component {
 													<Link
 														className="list-group-item list-group-item-action"
 														style={{ width: "80%", marginRight: "10px" }}
-														to={`/groups/${group.groupName}`}
+														to={{
+															pathname: `/groups/${group.groupName}`,
+															state: { groupId: group._id },
+														}}
 													>
 														{group.groupName}
 													</Link>

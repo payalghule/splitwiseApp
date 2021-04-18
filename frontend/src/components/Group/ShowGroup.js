@@ -20,12 +20,12 @@ class ShowGroup extends Component {
 		super(props);
 		this.state = {
 			groupName: "",
+			groupId: "",
 			groupMembers: [],
 			groupExpense: [],
 			userId: localStorage.getItem("userid"),
 			exitedGroup: 0,
 		};
-		//this.getGroupMembersData = this.getGroupMembersData.bind(this);
 		this.getGroupExpense = this.getGroupExpense.bind(this);
 		this.onExitGroup = this.onExitGroup.bind(this);
 	}
@@ -33,9 +33,12 @@ class ShowGroup extends Component {
 	componentDidMount() {
 		//to get the groupmembers
 		const groupNameFromProps = this.props.match.params.groupName;
+		const { groupId } = this.props.location.state;
+		console.log("groupId is", groupId);
 		const grpData = { gName: groupNameFromProps };
 		this.setState({
 			groupName: groupNameFromProps,
+			groupId: groupId,
 		});
 		console.log("groupData: ", grpData);
 		this.props.getGroupMembersData(grpData);
@@ -97,6 +100,7 @@ class ShowGroup extends Component {
 	};
 	render() {
 		console.log("this.props.groupMembers: ", this.props.groupMembers);
+		console.log("groupId is: ", this.state.groupId);
 		let gName = this.state.groupName;
 		let redirectVar = null;
 		let groupExpense = this.state.groupExpense;
