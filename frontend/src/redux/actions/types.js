@@ -7,3 +7,4 @@ export const GET_ALL_USER = "GET_ALL_USER";
 export const CREATE_GROUP = "CREATE_GROUP";
 export const GET_ALL_GROUPS = "GET_ALL_GROUPS";
 export const JOIN_GROUP = "JOIN_GROUP";
+export const GET_GROUP_MEMBERS = "GET_GROUP_MEMBERS";

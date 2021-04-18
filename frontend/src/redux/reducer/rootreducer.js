@@ -3,12 +3,14 @@ import authReducer from "./authReducer";
 import userProfileReducer from "./userProfileReducer";
 import groupReducer from "./groupReducer";
 import myGroupsReducer from "./myGroupsReducer";
+import showGroupReducer from "./showGroupReducer";
 
 const appReducer = combineReducers({
 	authuser: authReducer,
 	userProfile: userProfileReducer,
 	createGroup: groupReducer,
 	myGroups: myGroupsReducer,
+	showGroup: showGroupReducer,
 });
 
 const rootReducer = (state, action) => {

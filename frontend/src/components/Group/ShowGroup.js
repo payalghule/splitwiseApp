@@ -7,6 +7,9 @@ import AddExpense from "../Expense/AddExpense";
 import backendServer from "../../backEndConfig";
 import expensepic from "../../images/expensepic.PNG";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getGroupMembersData } from "../../redux/actions/showGroupActions";
 import LeftSidebar from "../Layout/LeftSidebar";
 import noexp from "../../images/noexp.PNG";
 import "../../App.css";
@@ -30,38 +33,19 @@ class ShowGroup extends Component {
 	componentDidMount() {
 		//to get the groupmembers
 		const groupNameFromProps = this.props.match.params.groupName;
+		const grpData = { gName: groupNameFromProps };
 		this.setState({
 			groupName: groupNameFromProps,
 		});
-		const grpData = { gName: groupNameFromProps };
 		console.log("groupData: ", grpData);
-		this.getGroupMembersData(grpData);
-		this.getGroupExpense(grpData);
+		this.props.getGroupMembersData(grpData);
+		//this.getGroupExpense(grpData);
 	}
 
 	addExpenseData = (expense) => {
 		this.setState({
-			//  groupExpense: this.state.groupExpense.concat(expense),
 			groupExpense: update(this.state.groupExpense, { $unshift: [expense] }),
 		});
-	};
-	getGroupMembersData = (groupData) => {
-		//to get the groupmembers
-		axios.defaults.withCredentials = true;
-		axios
-			.post(`${backendServer}/groups/getgroupmembs`, groupData)
-			.then((response) => {
-				console.log("response from Axios query", response.data);
-				this.setState({
-					groupMembers: this.state.groupMembers.concat(response.data),
-				});
-			})
-			.catch((error) => {
-				console.log(
-					"Member Data: error occured while connecting to backend:",
-					error
-				);
-			});
 	};
 	getGroupExpense = (groupData) => {
 		//to get the group Expense details
@@ -112,9 +96,9 @@ class ShowGroup extends Component {
 			});
 	};
 	render() {
-		let redirectVar = null;
-		console.log(this.state.groupName);
+		console.log("this.props.groupMembers: ", this.props.groupMembers);
 		let gName = this.state.groupName;
+		let redirectVar = null;
 		let groupExpense = this.state.groupExpense;
 		if (this.state.exitedGroup === 1) {
 			redirectVar = <Redirect to="/MyGroups" />;
@@ -197,4 +181,11 @@ class ShowGroup extends Component {
 	}
 }
 
-export default ShowGroup;
+ShowGroup.propTypes = {
+	getGroupMembersData: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+	groupMembers: state.showGroup.groupMembers,
+});
+
+export default connect(mapStateToProps, { getGroupMembersData })(ShowGroup);

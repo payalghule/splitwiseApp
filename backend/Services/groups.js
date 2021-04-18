@@ -96,4 +96,25 @@ router.post("/joingroup", (req, res) => {
 		}
 	});
 });
+
+router.post("/getgroupmembs", async (req, res) => {
+	console.log("Backend :: inside getgroupmembs ::ShowGroups ");
+	console.log("req.body :", req.body);
+	kafka.make_request("getgroupmembs", req.body, (err, results) => {
+		console.log("group details:", results);
+		if (err) {
+			console.log(err);
+			res.writeHead(err.status, {
+				"Content-Type": "text/plain",
+			});
+			res.end(err.data);
+		} else {
+			res.writeHead(results.status, {
+				"Content-Type": "text/plain",
+			});
+			res.end(results.data);
+		}
+	});
+});
+
 module.exports = router;
