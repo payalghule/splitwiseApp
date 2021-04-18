@@ -127,7 +127,8 @@ class ShowGroup extends Component {
 
 									<div className="col-sm-3">
 										<AddExpense
-											groupData={this.state}
+											groupMembers={this.props.groupMembers}
+											groupName={this.state.groupName}
 											method={this.addExpenseData}
 										/>
 									</div>

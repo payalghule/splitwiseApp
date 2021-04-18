@@ -35,25 +35,11 @@ class MyGroups extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		console.log("nextProps.allGroups", nextProps.allGroups);
-		// if (nextProps.allGroups) {
-		// 	let { allGroups } = nextProps;
-		// }
 		this.setState({
 			allGroupData: nextProps.allGroups,
 		});
 		console.log("allGroupData:", this.state.allGroupData);
 	}
-	// static getDerivedStateFromProps(props, state) {
-	// 	console.log(
-	// 		"getDerivedStateFromProps: props is",
-	// 		props,
-	// 		"state is:",
-	// 		state
-	// 	);
-	// 	return {
-	// 		allGroupData: props.allGroups,
-	// 	};
-	// }
 
 	groupLoad = (memData) => {
 		console.log("All group Data load");
@@ -75,8 +61,6 @@ class MyGroups extends Component {
 	render() {
 		console.log("this.state.allGroupData: ", this.state.allGroupData);
 		let list = this.state.allGroupData;
-		// console.log("this.props.allGroups: ", this.props.allGroups);
-		// let list = this.props.allGroups;
 		const { search } = this.state;
 
 		const groupList = list.filter((group) => {
