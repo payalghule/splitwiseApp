@@ -14,12 +14,19 @@ function AddExpense(props) {
 
 	const onSubmitExpense = (e) => {
 		e.preventDefault();
+		let groupmembs = props.groupMembers[0].groupMembers;
+		let groupMembsArray = groupmembs.map((member) => {
+			return member._id;
+		});
+		console.log("groupMembsArray: ", groupMembsArray);
+
 		const expenseData = {
 			description: description,
 			amount: amount,
+			groupId: props.groupId,
 			groupName: props.groupName,
-			groupMembers: props.groupMembers[0].groupMembers,
-			createdBy: localStorage.getItem("userid"), //email
+			groupMembers: groupMembsArray,
+			paidBy: localStorage.getItem("userid"), //email
 		};
 
 		console.log("expense data: ", expenseData);

@@ -10,7 +10,7 @@ const expenseSchema = new Schema(
 				paidBy: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
 				expDesc: { type: String },
 				amount: { type: Number },
-				createdAt: { type: Date },
+				createdAt: { type: Date, default: Date.now },
 				comments: [
 					{
 						message: { type: String },

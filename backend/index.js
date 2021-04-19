@@ -7,7 +7,9 @@ const cors = require("cors");
 
 const bcrypt = require("bcrypt");
 const Config = require("./config");
-//const mongoConnection = require("./database");
+const connectMongoDB = require("./database");
+connectMongoDB();
+
 //var kafka = require('./kafka/client');
 
 const app = express();
@@ -59,6 +61,7 @@ const profile = require("./Services/profile");
 const uploads = require("./Services/uploads");
 const images = require("./Services/images");
 const groups = require("./Services/groups");
+const expense = require("./Services/expense");
 
 app.use("/signup", signup);
 app.use("/login", login);
@@ -66,6 +69,7 @@ app.use("/profile", profile);
 app.use("/uploads", uploads);
 app.use("/images", images);
 app.use("/groups", groups);
+app.use("/expense", expense);
 
 const server = app.listen(3001, () => {
 	console.log("Server listening on port 3001");

@@ -35,11 +35,11 @@ class ShowGroup extends Component {
 		const groupNameFromProps = this.props.match.params.groupName;
 		const { groupId } = this.props.location.state;
 		console.log("groupId is", groupId);
-		const grpData = { gName: groupNameFromProps };
 		this.setState({
 			groupName: groupNameFromProps,
 			groupId: groupId,
 		});
+		const grpData = { gName: groupNameFromProps };
 		console.log("groupData: ", grpData);
 		this.props.getGroupMembersData(grpData);
 		//this.getGroupExpense(grpData);
@@ -133,6 +133,7 @@ class ShowGroup extends Component {
 										<AddExpense
 											groupMembers={this.props.groupMembers}
 											groupName={this.state.groupName}
+											groupId={this.state.groupId}
 											method={this.addExpenseData}
 										/>
 									</div>
