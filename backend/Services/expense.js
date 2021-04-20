@@ -29,20 +29,6 @@ router.post("/addexpense", async (req, res) => {
 		console.log(expResult[0].exp);
 		//push expense entry
 		expResult[0].exp.push(expenseObj);
-		//filter for members & create trans entry
-		// for (let i = 0; i < groupMembers.length; i++) {
-		// 	if (groupMembers[i] !== paidBy) {
-		// 		console.log("gm: ", groupMembers[i]);
-		// 		let amtResult = await Expense.find(
-		// 			{
-		// 				"groupTransaction.borrower": ObjectId(groupMembers[i]),
-		// 				"groupTransaction.payableTo": ObjectId(paidBy),
-		// 			},
-		// 			{ "groupTransaction.pendingAmt.$": 1, _id: 0 }
-		// 		);
-		// 		console.log("amtResult: ", amtResult);
-		// 	}
-		// }
 		let updated = await expResult[0].save();
 
 		if (!updated) {

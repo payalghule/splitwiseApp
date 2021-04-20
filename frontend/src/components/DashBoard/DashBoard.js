@@ -20,7 +20,7 @@ class DashBoard extends Component {
 	componentDidMount() {
 		const data = { userid: this.state.userId };
 		console.log("userData : ", data);
-		//	this.getDashSummary(data);
+		this.getDashSummary(data);
 	}
 
 	getDashSummary = (userData) => {
@@ -41,9 +41,9 @@ class DashBoard extends Component {
 	render() {
 		let dashBoardData = this.state.dashData;
 		console.log("dashBoardData: ", dashBoardData);
-		let youAreOwed = this.state.dashData.keyYouAreOwed;
+		let youAreOwed = this.state.dashData.youAreOwed;
 		console.log("youAreOwed: ", youAreOwed);
-		let youOwed = this.state.dashData.keyYouOwe;
+		let youOwed = this.state.dashData.youOwe;
 		console.log("youOwed: ", youOwed);
 
 		let TotalOwe = 0;
