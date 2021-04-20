@@ -4,6 +4,7 @@ import userProfileReducer from "./userProfileReducer";
 import groupReducer from "./groupReducer";
 import myGroupsReducer from "./myGroupsReducer";
 import showGroupReducer from "./showGroupReducer";
+import dashboardReducer from "./dashboardReducer";
 
 const appReducer = combineReducers({
 	authuser: authReducer,
@@ -11,6 +12,7 @@ const appReducer = combineReducers({
 	createGroup: groupReducer,
 	myGroups: myGroupsReducer,
 	showGroup: showGroupReducer,
+	dashboard: dashboardReducer,
 });
 
 const rootReducer = (state, action) => {

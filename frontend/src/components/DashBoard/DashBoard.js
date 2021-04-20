@@ -5,6 +5,9 @@ import NavbarDashBoard from "../Layout/NavbarDashboard";
 import LeftSidebar from "../Layout/LeftSidebar";
 import backendServer from "../../backEndConfig";
 import Settle from "../Expense/Settle";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getDashData } from "../../redux/actions/dashboardActions";
 import "../../App.css";
 
 class DashBoard extends Component {
@@ -14,36 +17,43 @@ class DashBoard extends Component {
 			userId: localStorage.getItem("userid"),
 			dashData: {},
 		};
-		this.getDashSummary = this.getDashSummary.bind(this);
+		//this.getDashSummary = this.getDashSummary.bind(this);
 	}
 
 	componentDidMount() {
 		const data = { userid: this.state.userId };
 		console.log("userData : ", data);
-		this.getDashSummary(data);
+		this.props.getDashData(data);
 	}
 
-	getDashSummary = (userData) => {
-		axios.defaults.withCredentials = true;
-		axios
-			.post(`${backendServer}/dashboard/getdashdata`, userData)
-			.then((response) => {
-				console.log("Data came from Axios call", response.data);
-				this.setState({
-					dashData: response.data,
-				});
-			})
-			.catch((error) => {
-				console.log("error occured while connecting to backend:", error);
-			});
-	};
+	// getDashSummary = (userData) => {
+	// 	axios.defaults.withCredentials = true;
+	// 	axios
+	// 		.post(`${backendServer}/dashboard/getdashdata`, userData)
+	// 		.then((response) => {
+	// 			console.log("Data came from Axios call", response.data);
+	// 			this.setState({
+	// 				dashData: response.data,
+	// 			});
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log("error occured while connecting to backend:", error);
+	// 		});
+	// };
 
 	render() {
-		let dashBoardData = this.state.dashData;
+		// let dashBoardData = this.state.dashData;
+		// console.log("dashBoardData: ", dashBoardData);
+		// let youAreOwed = this.state.dashData.youAreOwed;
+		// console.log("youAreOwed: ", youAreOwed);
+		// let youOwed = this.state.dashData.youOwe;
+		// console.log("youOwed: ", youOwed);
+
+		let dashBoardData = this.props.dashboardData;
 		console.log("dashBoardData: ", dashBoardData);
-		let youAreOwed = this.state.dashData.youAreOwed;
+		let youAreOwed = this.props.dashboardData.youAreOwed;
 		console.log("youAreOwed: ", youAreOwed);
-		let youOwed = this.state.dashData.youOwe;
+		let youOwed = this.props.dashboardData.youOwe;
 		console.log("youOwed: ", youOwed);
 
 		let TotalOwe = 0;
@@ -243,4 +253,11 @@ class DashBoard extends Component {
 	}
 }
 
-export default DashBoard;
+DashBoard.propTypes = {
+	getDashData: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+	dashboardData: state.dashboard.dashboardData,
+});
+
+export default connect(mapStateToProps, { getDashData })(DashBoard);
