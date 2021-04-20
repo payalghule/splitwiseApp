@@ -3,7 +3,6 @@ const express = require("express");
 const router = express();
 const Expense = require("../Models/ExpenseModel");
 const Balance = require("../Models/BalancesModel");
-const { ObjectId } = require("mongodb");
 
 router.post("/addexpense", async (req, res) => {
 	console.log("inside addexpense  backend");
@@ -13,75 +12,44 @@ router.post("/addexpense", async (req, res) => {
 	let paidBy = req.body.paidBy;
 	let amount = req.body.amount;
 	let splittedAmt = amount / groupMembers.length;
-	let transObj = {};
 	let expResult = await Expense.find({ groupId: req.body.groupId });
 	console.log("expResult", expResult);
-	let expenseObj = {
+
+	let expenseData = new Expense({
+		groupId: req.body.groupId,
+		groupName: req.body.groupName,
 		paidBy: paidBy,
 		expDesc: req.body.description,
 		amount: amount,
-	};
-	//if exp document is present:
-	//update existing document with below
-	//push expenseObj
-	//update transaction entries with new balances
-	if (expResult.length > 0 && expResult) {
-		console.log(expResult[0].exp);
-		//push expense entry
-		expResult[0].exp.push(expenseObj);
-		let updated = await expResult[0].save();
+		borrowers: [],
+	});
 
-		if (!updated) {
-			res.writeHead(400, {
-				"Content-Type": "text/plain",
-			});
-			res.end("ERROR");
-		} else {
-			res.writeHead(200, {
-				"Content-Type": "text/plain",
-			});
-			res.end("EXPENSE_ADDED");
-		}
-	} //first time to create entry
-	else {
-		let expenseData = new Expense({
-			groupId: req.body.groupId,
-			groupName: req.body.groupName,
-			exp: [],
-			groupTransaction: [],
+	groupMembers
+		.filter((member) => {
+			return member !== paidBy;
+		})
+		.forEach((mem) => {
+			console.log(mem);
+			let borrowersObj = {
+				_id: mem,
+				pendingAmt: splittedAmt,
+			};
+			expenseData.borrowers.push(borrowersObj);
 		});
 
-		expenseData.exp.push(expenseObj);
+	console.log("expenseData is: ", expenseData);
 
-		groupMembers
-			.filter((member) => {
-				return member !== paidBy;
-			})
-			.forEach((mem) => {
-				console.log(mem);
-				transObj = {
-					borrower: mem,
-					payableTo: paidBy,
-					pendingAmt: amount / groupStrength,
-				};
-				//transArray.push(transObj);
-				expenseData.groupTransaction.push(transObj);
-			});
-
-		console.log("expenseData is: ", expenseData);
-
-		const saveExp = await expenseData.save();
-		if (!saveExp) {
-			res.writeHead(400, {
-				"Content-Type": "text/plain",
-			});
-			res.end("ERROR");
-		} else {
-			res.writeHead(200, {
-				"Content-Type": "text/plain",
-			});
-			res.end("EXPENSE_ADDED");
-		}
+	const saveExp = await expenseData.save();
+	if (!saveExp) {
+		res.writeHead(400, {
+			"Content-Type": "text/plain",
+		});
+		res.end("ERROR");
+	} else {
+		res.writeHead(200, {
+			"Content-Type": "text/plain",
+		});
+		res.end("EXPENSE_ADDED");
 	}
 
 	//to insert into Balance Model
