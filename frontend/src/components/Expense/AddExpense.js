@@ -4,6 +4,8 @@ import { Modal } from "react-bootstrap";
 import explogo from "../../images/explogo.png";
 import axios from "axios";
 import backendServer from "../../backEndConfig";
+import { connect } from "react-redux";
+import { getGroupExpense } from "../../redux/actions/showGroupActions";
 
 function AddExpense(props) {
 	const [show, setShow] = useState(false);
@@ -30,6 +32,7 @@ function AddExpense(props) {
 		};
 
 		console.log("expense data: ", expenseData);
+		const grpData = { gName: props.groupName, gId: props.groupId };
 		// const currentDate = new Date();
 		// const formattedDate = currentDate
 		// 	.toLocaleDateString("en-GB", {
@@ -56,6 +59,7 @@ function AddExpense(props) {
 				console.log("response after post", response);
 				if (response.status === 200) {
 					alert("Expense added sucessfully!");
+					props.getGroupExpense(grpData);
 				}
 			})
 			.catch((error) => {
@@ -157,4 +161,6 @@ function AddExpense(props) {
 		</div>
 	);
 }
-export default AddExpense;
+//export default AddExpense;
+
+export default connect(null, { getGroupExpense })(AddExpense);

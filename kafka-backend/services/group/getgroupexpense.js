@@ -31,6 +31,7 @@ let handle_request = async (msg, callback) => {
 						createdAt: expResult[i].createdAt,
 						borrowers: expResult[i].borrowers,
 						paidbyUser: paidByUser.username,
+						expId: expResult[i]._id,
 					};
 
 					//console.log("obj is", obj);

@@ -79,7 +79,7 @@ class DashBoard extends Component {
 						</div>
 
 						<div className="col" id="dash-center">
-							<div className="container dashContainer">
+							<div>
 								<div className="row dashheader align-items-center">
 									<div className="col-sm-3">
 										<h3>Dashboard </h3>
@@ -92,7 +92,7 @@ class DashBoard extends Component {
 								</div>
 							</div>
 
-							<div className="container">
+							<div>
 								<div className="row totalbalance">
 									<div className="col-sm-4 bal-cell">
 										<label

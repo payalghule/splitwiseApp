@@ -104,7 +104,7 @@ class ShowGroup extends Component {
 						</div>
 
 						<div className="col" id="dash-center">
-							<div className="container">
+							<div>
 								<div className="row dashheader">
 									<div className="col">
 										<h3>{gName}</h3>
@@ -127,7 +127,7 @@ class ShowGroup extends Component {
 								{groupExpense && groupExpense.length > 0 ? (
 									<div>
 										{groupExpense.map((exp) => (
-											<div className="list-group">
+											<div className="list-group" key={exp.expId}>
 												<li className="list-group-item">
 													<div className="d-flex w-100 justify-content-between">
 														<h5 className="mb-1"></h5>

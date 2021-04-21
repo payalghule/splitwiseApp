@@ -77,7 +77,7 @@ class MyGroups extends Component {
 						</div>
 
 						<div className="col" id="dash-center">
-							<div className="container">
+							<div>
 								<div className="row dashheader align-items-center">
 									<div className="col">
 										<h3>My Groups</h3>
