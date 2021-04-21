@@ -33,6 +33,7 @@ const getallusers = require("./services/group/getallusers");
 const getallgroups = require("./services/group/getallgroups");
 const joingroup = require("./services/group/joingroup");
 const getgroupmembs = require("./services/group/getgroupmembs");
+const getgroupexpense = require("./services/group/getgroupexpense");
 const getdashdata = require("./services/dashboard/getdashdata");
 
 function handleTopicRequest(topic_name, fname) {
@@ -110,4 +111,5 @@ handleTopicRequest("getallusers", getallusers);
 handleTopicRequest("getallgroups", getallgroups);
 handleTopicRequest("joingroup", joingroup);
 handleTopicRequest("getgroupmembs", getgroupmembs);
+handleTopicRequest("getgroupexpense", getgroupexpense);
 handleTopicRequest("getdashdata", getdashdata);

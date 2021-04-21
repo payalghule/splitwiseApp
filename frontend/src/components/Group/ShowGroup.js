@@ -9,7 +9,10 @@ import expensepic from "../../images/expensepic.PNG";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getGroupMembersData } from "../../redux/actions/showGroupActions";
+import {
+	getGroupMembersData,
+	getGroupExpense,
+} from "../../redux/actions/showGroupActions";
 import LeftSidebar from "../Layout/LeftSidebar";
 import noexp from "../../images/noexp.PNG";
 import "../../App.css";
@@ -26,7 +29,7 @@ class ShowGroup extends Component {
 			userId: localStorage.getItem("userid"),
 			exitedGroup: 0,
 		};
-		this.getGroupExpense = this.getGroupExpense.bind(this);
+		//this.getGroupExpense = this.getGroupExpense.bind(this);
 		this.onExitGroup = this.onExitGroup.bind(this);
 	}
 
@@ -39,33 +42,16 @@ class ShowGroup extends Component {
 			groupName: groupNameFromProps,
 			groupId: groupId,
 		});
-		const grpData = { gName: groupNameFromProps };
+		const grpData = { gName: groupNameFromProps, gId: groupId };
 		console.log("groupData: ", grpData);
 		this.props.getGroupMembersData(grpData);
-		//this.getGroupExpense(grpData);
+		this.props.getGroupExpense(grpData);
 	}
 
 	addExpenseData = (expense) => {
 		this.setState({
 			groupExpense: update(this.state.groupExpense, { $unshift: [expense] }),
 		});
-	};
-	getGroupExpense = (groupData) => {
-		//to get the group Expense details
-		axios
-			.post(`${backendServer}/groups/getgrpexpense`, groupData)
-			.then((response) => {
-				console.log("response from Axios query", response.data);
-				this.setState({
-					groupExpense: this.state.groupExpense.concat(response.data),
-				});
-			})
-			.catch((error) => {
-				console.log(
-					"Expense Data :error occured while connecting to backend:",
-					error
-				);
-			});
 	};
 
 	onExitGroup = () => {
@@ -103,7 +89,7 @@ class ShowGroup extends Component {
 		console.log("groupId is: ", this.state.groupId);
 		let gName = this.state.groupName;
 		let redirectVar = null;
-		let groupExpense = this.state.groupExpense;
+		let groupExpense = this.props.groupExpenses;
 		if (this.state.exitedGroup === 1) {
 			redirectVar = <Redirect to="/MyGroups" />;
 		}
@@ -189,9 +175,14 @@ class ShowGroup extends Component {
 
 ShowGroup.propTypes = {
 	getGroupMembersData: PropTypes.func.isRequired,
+	getGroupExpense: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
 	groupMembers: state.showGroup.groupMembers,
+	groupExpenses: state.showGroup.groupExpenses,
 });
 
-export default connect(mapStateToProps, { getGroupMembersData })(ShowGroup);
+export default connect(mapStateToProps, {
+	getGroupMembersData,
+	getGroupExpense,
+})(ShowGroup);
