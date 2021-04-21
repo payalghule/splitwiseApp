@@ -9,13 +9,10 @@ let handle_request = async (msg, callback) => {
 	let response = {};
 	let expArray = [];
 	try {
-		let expResult = await Expense.find(
-			{
-				groupId: msg.gId,
-				groupName: msg.gName,
-			},
-			{ paidBy: 1, expDesc: 1, amount: 1, createdAt: 1, borrowers: 1 }
-		).sort({ createdAt: -1 });
+		let expResult = await Expense.find({
+			groupId: msg.gId,
+			groupName: msg.gName,
+		}).sort({ createdAt: -1 });
 		//console.log("expResult: ", expResult);
 		if (expResult && expResult.length > 0) {
 			for (let i = 0; i < expResult.length; i++) {
@@ -32,6 +29,9 @@ let handle_request = async (msg, callback) => {
 						borrowers: expResult[i].borrowers,
 						paidbyUser: paidByUser.username,
 						expId: expResult[i]._id,
+						comments: expResult[i].comments,
+						groupId: expResult[i].groupId,
+						groupName: expResult[i].groupName,
 					};
 
 					//console.log("obj is", obj);

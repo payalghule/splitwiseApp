@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import update from "react-addons-update";
 import NavbarDashBoard from "../Layout/NavbarDashboard";
 import AddExpense from "../Expense/AddExpense";
+import Comments from "./Comments";
 import backendServer from "../../backEndConfig";
 import expensepic from "../../images/expensepic.PNG";
 import axios from "axios";
@@ -27,7 +28,10 @@ class ShowGroup extends Component {
 			groupMembers: [],
 			groupExpense: [],
 			userId: localStorage.getItem("userid"),
+			username: localStorage.getItem("username"),
 			exitedGroup: 0,
+			visible: false,
+			expenseId: "",
 		};
 		//this.getGroupExpense = this.getGroupExpense.bind(this);
 		this.onExitGroup = this.onExitGroup.bind(this);
@@ -128,7 +132,15 @@ class ShowGroup extends Component {
 									<div>
 										{groupExpense.map((exp) => (
 											<div className="list-group" key={exp.expId}>
-												<li className="list-group-item">
+												<li
+													className="list-group-item"
+													onClick={() => {
+														this.setState({
+															visible: true,
+															expenseId: exp.expId,
+														});
+													}}
+												>
 													<div className="d-flex w-100 justify-content-between">
 														<h5 className="mb-1"></h5>
 														<h6>{exp.date}</h6>
@@ -150,6 +162,17 @@ class ShowGroup extends Component {
 														</div>
 													</div>
 												</li>
+												<div>
+													{this.state.visible &&
+													this.state.expenseId === exp.expId ? (
+														<Comments
+															expId={exp.expId}
+															expComments={exp.comments}
+															groupName={this.state.groupName}
+															groupId={this.state.groupId}
+														/>
+													) : null}
+												</div>
 											</div>
 										))}
 									</div>
