@@ -3,6 +3,7 @@ const express = require("express");
 const router = express();
 const Expense = require("../Models/ExpenseModel");
 const Balance = require("../Models/BalancesModel");
+const RecentActivity = require("../Models/RecentActivityModel");
 
 router.post("/addexpense", async (req, res) => {
 	console.log("inside addexpense  backend");
@@ -102,5 +103,16 @@ router.post("/addexpense", async (req, res) => {
 			}
 		}
 	}
+
+	let recent = new RecentActivity({
+		paidBy: paidBy,
+		eventId: "0",
+		eventType: "ADD_EXP",
+		groupName: req.body.groupName,
+		expDesc: req.body.description,
+		amount: amount,
+	});
+	console.log("data to insert into recent activity is:", recent);
+	recent.save();
 });
 module.exports = router;

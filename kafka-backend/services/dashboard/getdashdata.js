@@ -26,6 +26,7 @@ let handle_request = async (msg, callback) => {
 					dashData.youAreOwed.push(dashObj);
 				} else if (payableData[i].pendingAmt < 0) {
 					let dashObj = {
+						payableToUserId: borrowerUser._id,
 						payableTo: borrowerUser.username,
 						pendingAmt: Math.abs(payableData[i].pendingAmt),
 					};
@@ -44,6 +45,7 @@ let handle_request = async (msg, callback) => {
 				console.log("payableToUser: ", payableToUser.username);
 				if (borrowerData[i].pendingAmt > 0) {
 					let dashObj = {
+						payableToUserId: payableToUser._id,
 						payableTo: payableToUser.username,
 						pendingAmt: borrowerData[i].pendingAmt,
 					};

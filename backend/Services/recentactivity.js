@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express();
 const kafka = require("../kafka/client");
-
-router.post("/getdashdata", async (req, res) => {
-	console.log("Backend:: inside getdashdata");
-	console.log("req.body :", req.body);
-	kafka.make_request("getdashdata", req.body, (err, results) => {
-		console.log("group details:", results);
+router.post("/getrecentactivity", async (req, res) => {
+	console.log("Backend ::inside getrecentactivity");
+	console.log("req body:", req.body);
+	kafka.make_request("getrecentactivity", req.body, (err, results) => {
+		console.log("recent activiy details:", results);
 		if (err) {
 			console.log(err);
 			res.writeHead(err.status, {

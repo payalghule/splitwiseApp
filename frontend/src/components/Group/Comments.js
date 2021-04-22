@@ -74,7 +74,6 @@ const Comments = (props) => {
 			<div style={{ float: "left" }}>
 				{" "}
 				<span style={{ fontSize: "bold" }}>Notes and Comments :</span>
-				Click on comment to delete
 			</div>
 			<br />
 			<form onSubmit={onSubmitComment}>

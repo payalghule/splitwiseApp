@@ -1,54 +1,82 @@
 /* eslint-disable */
 import React, { Component } from "react";
-import { withRouter } from "react-router";
-import { Redirect } from "react-router";
 import NavbarDashBoard from "../Layout/NavbarDashboard";
-import AddExpense from "../Expense/AddExpense";
 import backendServer from "../../backEndConfig";
-import expensepic from "../../images/expensepic.PNG";
 import axios from "axios";
 import LeftSidebar from "../Layout/LeftSidebar";
 import "../../App.css";
 
-//to show list of groups
 class RecentActivity extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			activity: [],
 			userId: localStorage.getItem("userid"),
+			settle: [],
+			curPage: 1,
+			pageSize: 2,
 		};
-
-		this.getRecentAcitivityData = this.getRecentAcitivityData.bind(this);
 	}
+	onPage = (e) => {
+		console.log("In pagination");
+		console.log(e.target);
+		console.log(e.target.text);
+		this.setState({
+			curPage: e.target.text,
+		});
+	};
+
+	OnChange = (e) => {
+		console.log("Inside Onchange");
+		this.setState({
+			pageSize: e.target.value,
+		});
+	};
 
 	componentDidMount() {
-		//to get the Recent activity
-		// this.getRecentAcitivityData();
-	}
-
-	getRecentAcitivityData = () => {
-		//to get the groupmembers
+		document.title = "Recent Activiy";
+		const activityInfo = { userId: this.state.userId };
+		console.log("activityInfo", activityInfo);
 		axios.defaults.withCredentials = true;
 		axios
-			.post(`${backendServer}/activity/getactivity`)
+			.post(`${backendServer}/recentactivity/getrecentactivity`, activityInfo)
 			.then((response) => {
-				console.log("response from Axios query", response.data);
+				console.log("data is", response.data);
 				this.setState({
 					activity: this.state.activity.concat(response.data),
 				});
 			})
 			.catch((error) => {
-				console.log(
-					"Recent Activity Data: error occured while connecting to backend:",
-					error
-				);
+				console.log("error occured while connecting to backend:", error);
 			});
-	};
+	}
 
 	render() {
-		let actiList = this.state.activity;
-		let user = this.state.userId;
+		let items = this.state.activity;
+
+		console.log("Page size:", this.state.pageSize);
+		let pgSize = this.state.pageSize;
+
+		let count = 1;
+		if (items.length % pgSize == 0) {
+			count = pgSize;
+		} else {
+			count = pgSize + 1;
+		}
+
+		console.log("paginate");
+		let start = pgSize * (this.state.curPage - 1);
+		let end = start + pgSize;
+		console.log("start: ", start, ", end: ", end);
+		let displayitems = [];
+		if (end > items.length) {
+			end = items.length;
+		}
+		for (start; start < end; start++) {
+			displayitems.push(items[start]);
+		}
+		console.log("render");
+		console.log("displayitems", displayitems);
 		return (
 			<div className="dashboard">
 				<NavbarDashBoard />
@@ -59,16 +87,23 @@ class RecentActivity extends Component {
 						</div>
 
 						<div className="col" id="dash-center">
-							<div className="container">
+							<div>
 								<div className="row dashheader">
 									<div className="col">
 										<h3>Recent Activity</h3>
+										<span>
+											<select onChange={this.OnChange}>
+												<option>2</option>
+												<option>5</option>
+												<option>10</option>
+											</select>
+										</span>
 									</div>
 								</div>
-								{actiList && actiList.length > 0 ? (
+								{displayitems && displayitems.length > 0 ? (
 									<div>
-										{actiList.map((activity) =>
-											activity.isSettleEntry === 1 ? (
+										{displayitems.map((activity) =>
+											activity.eventId === 1 ? (
 												<div className="list-group list-group-horizontal">
 													<li
 														className="list-group-item"
@@ -78,10 +113,9 @@ class RecentActivity extends Component {
 															width: "100%",
 														}}
 													>
-														<strong>{activity.paidBy}</strong> paid $
-														{activity.amount} to{" "}
-														<strong>{activity.paidTo}</strong> on{" "}
-														{activity.date}
+														<strong>{activity.settlededBy}</strong> settled dues
+														of ${activity.amount} with{" "}
+														<strong>{activity.settleWithUser}</strong>
 													</li>
 												</div>
 											) : (
@@ -94,10 +128,10 @@ class RecentActivity extends Component {
 															width: "100%",
 														}}
 													>
-														<strong>{activity.paidBy}</strong> added{" "}
-														<strong>"{activity.expDesc}"</strong> in{" "}
-														<strong>"{activity.groupName}"</strong> on{" "}
-														{activity.date}
+														<strong>{activity.paidBy}</strong> added an expense{" "}
+														<strong>"{activity.expDesc}"</strong> of amount $
+														{activity.amount} in{" "}
+														<strong>"{activity.groupName}"</strong>
 													</li>
 												</div>
 											)

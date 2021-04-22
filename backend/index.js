@@ -64,6 +64,7 @@ const groups = require("./Services/groups");
 const expense = require("./Services/expense");
 const dashboard = require("./Services/dashboard");
 const comments = require("./Services/comments");
+const recentactivity = require("./Services/recentactivity");
 
 app.use("/signup", signup);
 app.use("/login", login);
@@ -74,6 +75,7 @@ app.use("/groups", groups);
 app.use("/expense", expense);
 app.use("/dashboard", dashboard);
 app.use("/comments", comments);
+app.use("/recentactivity", recentactivity);
 
 const server = app.listen(3001, () => {
 	console.log("Server listening on port 3001");

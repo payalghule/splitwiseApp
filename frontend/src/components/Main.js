@@ -9,7 +9,7 @@ import Profile from "./Profile/Profile";
 import Group from "./Group/Group";
 import MyGroups from "./Group/MyGroups";
 import ShowGroups from "./Group/ShowGroup";
-// import RecentActivity from './DashBoard/RecentActivity';
+import RecentActivity from "./DashBoard/RecentActivity";
 
 const Main = () => {
 	return (
@@ -22,6 +22,7 @@ const Main = () => {
 			<Route path="/Group" component={Group} />
 			<Route path="/MyGroups" component={MyGroups} />
 			<Route path="/groups/:groupName" component={ShowGroups} />
+			<Route path="/RecentActivity" component={RecentActivity} />
 		</div>
 	);
 };
