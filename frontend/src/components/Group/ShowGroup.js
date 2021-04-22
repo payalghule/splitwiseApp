@@ -143,7 +143,7 @@ class ShowGroup extends Component {
 												>
 													<div className="d-flex w-100 justify-content-between">
 														<h5 className="mb-1"></h5>
-														<h6>{exp.date}</h6>
+														<h6>{exp.createdAt.split("T")[0]}</h6>
 													</div>
 													<div className="row">
 														<div className="col">
