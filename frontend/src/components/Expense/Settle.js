@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import axios from "axios";
 import backendServer from "../../backEndConfig";
 import { Multiselect } from "multiselect-react-dropdown";
+import swal from "sweetalert";
 
 function Settle(props) {
 	const [show, setShow] = useState(false);
@@ -17,7 +18,7 @@ function Settle(props) {
 		e.preventDefault();
 		const settleData = {
 			settleUserAmt: member[0].pendingAmt,
-			settleWithUserId: member[0].uid,
+			settleWithUserId: member[0].payableToUserId,
 			settlededById: localStorage.getItem("userid"),
 		};
 
@@ -25,16 +26,16 @@ function Settle(props) {
 
 		axios.defaults.withCredentials = true;
 		axios
-			.post(`${backendServer}/settle/settleup`, settleData)
+			.post(`${backendServer}/dashboard/settleup`, settleData)
 			.then((response) => {
 				console.log("response after Axios post", response);
 				if (response.status === 200) {
-					alert("Settled up sucessfully!");
+					swal("Settled up sucessfully!!", { icon: "success" });
 					window.location.reload(false);
 				}
 			})
 			.catch((error) => {
-				alert("Failed to add expense");
+				swal("Error", "Failed to settle expense", "error");
 				console.log("error:", error);
 			});
 		handleClose();

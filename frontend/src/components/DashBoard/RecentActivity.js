@@ -4,6 +4,10 @@ import NavbarDashBoard from "../Layout/NavbarDashboard";
 import backendServer from "../../backEndConfig";
 import axios from "axios";
 import LeftSidebar from "../Layout/LeftSidebar";
+import PropTypes from "prop-types";
+import { Pagination } from "react-bootstrap";
+import { connect } from "react-redux";
+import { getRecentActivity } from "../../redux/actions/recentActiActions";
 import "../../App.css";
 
 class RecentActivity extends Component {
@@ -29,45 +33,55 @@ class RecentActivity extends Component {
 	OnChange = (e) => {
 		console.log("Inside Onchange");
 		this.setState({
-			pageSize: e.target.value,
+			pageSize: parseInt(e.target.value, 10),
 		});
 	};
 
+	componentWillReceiveProps(nextProps) {
+		console.log("nextProps.recentData", nextProps.activityData);
+
+		this.setState({
+			activity: this.state.activity.concat(nextProps.activityData),
+		});
+	}
+
 	componentDidMount() {
-		document.title = "Recent Activiy";
 		const activityInfo = { userId: this.state.userId };
-		console.log("activityInfo", activityInfo);
-		axios.defaults.withCredentials = true;
-		axios
-			.post(`${backendServer}/recentactivity/getrecentactivity`, activityInfo)
-			.then((response) => {
-				console.log("data is", response.data);
-				this.setState({
-					activity: this.state.activity.concat(response.data),
-				});
-			})
-			.catch((error) => {
-				console.log("error occured while connecting to backend:", error);
-			});
+		this.props.getRecentActivity(activityInfo);
 	}
 
 	render() {
+		let paginationItemsTag = [];
 		let items = this.state.activity;
-
-		console.log("Page size:", this.state.pageSize);
 		let pgSize = this.state.pageSize;
-
+		let active = this.state.curPage;
 		let count = 1;
-		if (items.length % pgSize == 0) {
-			count = pgSize;
+
+		console.log("Recent activity data is:", items);
+
+		let num = items.length / pgSize;
+		console.log(items.length / pgSize);
+		console.log(Number.isInteger(items.length / pgSize));
+		if (Number.isInteger(num)) {
+			count = num;
 		} else {
-			count = pgSize + 1;
+			count = Math.floor(num) + 1;
+		}
+		console.log("count:", count);
+		console.log("items.length:", items.length);
+
+		for (let number = 1; number <= count; number++) {
+			paginationItemsTag.push(
+				<Pagination.Item key={number} active={number === active}>
+					{number}
+				</Pagination.Item>
+			);
 		}
 
-		console.log("paginate");
-		let start = pgSize * (this.state.curPage - 1);
-		let end = start + pgSize;
-		console.log("start: ", start, ", end: ", end);
+		// console.log("paginate");
+		let start = parseInt(pgSize * (this.state.curPage - 1));
+		let end = this.state.pageSize + start;
+		//   console.log("start: ", start, ", end: ", end);
 		let displayitems = [];
 		if (end > items.length) {
 			end = items.length;
@@ -75,8 +89,6 @@ class RecentActivity extends Component {
 		for (start; start < end; start++) {
 			displayitems.push(items[start]);
 		}
-		console.log("render");
-		console.log("displayitems", displayitems);
 		return (
 			<div className="dashboard">
 				<NavbarDashBoard />
@@ -147,6 +159,20 @@ class RecentActivity extends Component {
 									<h4 className="alert-success">No Recent Activity to show</h4>
 								)}
 							</div>
+
+							<center>
+								<br /> <br /> <br /> <br />
+								<br />
+								<b /> <br />
+								<br />
+								<Pagination
+									onClick={this.onPage}
+									size="lg"
+									style={{ display: "inline-flex", color: "#5bc5a7" }}
+								>
+									{paginationItemsTag}
+								</Pagination>
+							</center>
 						</div>
 
 						<div className="col-sm-2"></div>
@@ -157,4 +183,12 @@ class RecentActivity extends Component {
 	}
 }
 
-export default RecentActivity;
+//export default RecentActivity;
+RecentActivity.propTypes = {
+	getRecentActivity: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+	activityData: state.recentActivity.activityData,
+});
+
+export default connect(mapStateToProps, { getRecentActivity })(RecentActivity);

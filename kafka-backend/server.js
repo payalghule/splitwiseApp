@@ -35,6 +35,7 @@ const joingroup = require("./services/group/joingroup");
 const getgroupmembs = require("./services/group/getgroupmembs");
 const getgroupexpense = require("./services/group/getgroupexpense");
 const getdashdata = require("./services/dashboard/getdashdata");
+const settleup = require("./services/dashboard/settleup");
 const getrecentactivity = require("./services/recentactivity/getrecentactivity");
 
 function handleTopicRequest(topic_name, fname) {
@@ -114,4 +115,5 @@ handleTopicRequest("joingroup", joingroup);
 handleTopicRequest("getgroupmembs", getgroupmembs);
 handleTopicRequest("getgroupexpense", getgroupexpense);
 handleTopicRequest("getdashdata", getdashdata);
+handleTopicRequest("settleup", settleup);
 handleTopicRequest("getrecentactivity", getrecentactivity);
