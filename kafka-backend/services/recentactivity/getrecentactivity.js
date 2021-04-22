@@ -1,6 +1,6 @@
 "use strict";
 const Users = require("../../Models/UserModel");
-const RecentActivity = require("../../../backend/Models/RecentActivityModel");
+const RecentActivity = require("../../Models/RecentActivityModel");
 
 let handle_request = async (msg, callback) => {
 	console.log(
@@ -9,9 +9,10 @@ let handle_request = async (msg, callback) => {
 	console.log("Message is: ", msg);
 	let err = {};
 	let response = {};
+	let actData = [];
 	try {
 		let actList = await RecentActivity.find({}).sort({ createdAt: -1 });
-		let actData = [];
+
 		if (actList) {
 			console.log("length", actList.length);
 
@@ -30,6 +31,7 @@ let handle_request = async (msg, callback) => {
 						eventId: actList[i].eventId,
 						eventType: actList[i].eventType,
 						createdAt: actList[i].createdAt,
+						_id: actList[i]._id,
 					};
 					console.log("actObj", actObj);
 					actData.push(actObj);
@@ -41,6 +43,7 @@ let handle_request = async (msg, callback) => {
 						eventId: actList[i].eventId,
 						eventType: actList[i].eventType,
 						createdAt: actList[i].createdAt,
+						_id: actList[i]._id,
 					};
 					console.log("actObj", actObj);
 					actData.push(actObj);

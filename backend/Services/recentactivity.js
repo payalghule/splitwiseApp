@@ -12,7 +12,7 @@ router.post("/getrecentactivity", async (req, res) => {
 				"Content-Type": "text/plain",
 			});
 			res.end(err.data);
-		} else {
+		} else if (results) {
 			res.writeHead(results.status, {
 				"Content-Type": "text/plain",
 			});

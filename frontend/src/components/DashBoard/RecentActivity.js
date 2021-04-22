@@ -104,7 +104,10 @@ class RecentActivity extends Component {
 									<div>
 										{displayitems.map((activity) =>
 											activity.eventId === 1 ? (
-												<div className="list-group list-group-horizontal">
+												<div
+													className="list-group list-group-horizontal"
+													key={activity._id}
+												>
 													<li
 														className="list-group-item"
 														style={{
@@ -119,7 +122,10 @@ class RecentActivity extends Component {
 													</li>
 												</div>
 											) : (
-												<div className="list-group list-group-horizontal">
+												<div
+													className="list-group list-group-horizontal"
+													key={activity._id}
+												>
 													<li
 														className="list-group-item"
 														style={{
