@@ -3,6 +3,7 @@ import axios from "axios";
 import backendServer from "../../backEndConfig";
 import { getGroupExpense } from "../../redux/actions/showGroupActions";
 import { connect } from "react-redux";
+import swal from "sweetalert";
 const Comments = (props) => {
 	const [commentText, setCommentText] = useState();
 
@@ -23,7 +24,7 @@ const Comments = (props) => {
 			.then((response) => {
 				console.log("response after post", response);
 				if (response.status === 200) {
-					alert("Comment added sucessfully!");
+					swal("Comment added sucessfully!", { icon: "success" });
 					props.getGroupExpense(grpData);
 				}
 			})
@@ -31,6 +32,41 @@ const Comments = (props) => {
 				alert("Failed to add comment");
 				console.log("error:", error);
 			});
+	};
+
+	const handleDeleteComment = (commentId, commentor) => {
+		const currentUser = localStorage.getItem("username");
+		const grpData = { gName: props.groupName, gId: props.groupId };
+		if (currentUser !== commentor) {
+			swal("Error", "You can't delete someone's comment", "error");
+		} else {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover this comment !",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
+					axios
+						.post(`${backendServer}/comments/deletecomment`, {
+							expId: props.expId,
+							delcommentId: commentId,
+						})
+						.then((response) => {
+							console.log("response after post", response);
+							if (response.status === 200) {
+								swal("Comment deleted sucessfully!", { icon: "success" });
+								props.getGroupExpense(grpData);
+							}
+						})
+						.catch((error) => {
+							swal("Failed to delete comment");
+							console.log("error:", error);
+						});
+				}
+			});
+		}
 	};
 
 	return (
@@ -113,7 +149,7 @@ const Comments = (props) => {
 											on {comment.msgCreatedAt.split("T")[0]}
 										</div>
 										<div
-											className="col-sm-8"
+											className="col-sm-6"
 											style={{
 												fontSize: "16px",
 												fontWeight: "bold",
@@ -121,6 +157,24 @@ const Comments = (props) => {
 											}}
 										>
 											{comment.message}
+										</div>
+										<div
+											className="col-sm-2"
+											style={{
+												fontSize: "16px",
+												fontWeight: "bold",
+												lineHeight: "normal",
+											}}
+										>
+											<button
+												className="btn"
+												onClick={() =>
+													handleDeleteComment(comment._id, comment.username)
+												}
+												style={{ color: "red" }}
+											>
+												Delete
+											</button>
 										</div>
 									</div>
 								</div>

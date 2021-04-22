@@ -40,4 +40,37 @@ router.post("/addcomment", (req, res) => {
 	);
 });
 
+router.post("/deletecomment", (req, res) => {
+	console.log("---------In Backend: Delete comment---------");
+	console.log("req.body: ", req.body);
+
+	Expense.findOneAndUpdate(
+		{ _id: mongoose.Types.ObjectId(req.body.expId) },
+		{
+			$pull: {
+				comments: { _id: mongoose.Types.ObjectId(req.body.delcommentId) },
+			},
+		},
+		(err, result) => {
+			if (err) {
+				console.log("Unable to fetch user details.", err);
+				let err = {};
+				err.status = 500;
+				err.data = "ERROR";
+				return res.status(err.status).send(err.data);
+			} else {
+				if (result) {
+					console.log("Comment deleted ", result);
+					return res.status(200).send("COMMENT_DELETED");
+				} else {
+					let err = {};
+					err.status = 401;
+					err.data = "ERROR";
+					return res.status(err.status).send(err.data);
+				}
+			}
+		}
+	);
+});
+
 module.exports = router;
