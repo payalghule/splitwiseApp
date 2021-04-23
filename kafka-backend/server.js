@@ -38,6 +38,8 @@ const getdashdata = require("./services/dashboard/getdashdata");
 const settleup = require("./services/dashboard/settleup");
 const getrecentactivity = require("./services/recentactivity/getrecentactivity");
 const addexpense = require("./services/expense/addexpense");
+const addcomment = require("./services/comments/addcomment");
+const deletecomment = require("./services/comments/deletecomment");
 
 function handleTopicRequest(topic_name, fname) {
 	var consumer = connection.getConsumer(topic_name);
@@ -119,3 +121,5 @@ handleTopicRequest("getdashdata", getdashdata);
 handleTopicRequest("settleup", settleup);
 handleTopicRequest("getrecentactivity", getrecentactivity);
 handleTopicRequest("addexpense", addexpense);
+handleTopicRequest("addcomment", addcomment);
+handleTopicRequest("deletecomment", deletecomment);
