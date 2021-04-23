@@ -37,6 +37,7 @@ const getgroupexpense = require("./services/group/getgroupexpense");
 const getdashdata = require("./services/dashboard/getdashdata");
 const settleup = require("./services/dashboard/settleup");
 const getrecentactivity = require("./services/recentactivity/getrecentactivity");
+const addexpense = require("./services/expense/addexpense");
 
 function handleTopicRequest(topic_name, fname) {
 	var consumer = connection.getConsumer(topic_name);
@@ -117,3 +118,4 @@ handleTopicRequest("getgroupexpense", getgroupexpense);
 handleTopicRequest("getdashdata", getdashdata);
 handleTopicRequest("settleup", settleup);
 handleTopicRequest("getrecentactivity", getrecentactivity);
+handleTopicRequest("addexpense", addexpense);
