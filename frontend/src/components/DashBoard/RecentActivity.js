@@ -103,57 +103,91 @@ class RecentActivity extends Component {
 								<div className="row dashheader">
 									<div className="col">
 										<h3>Recent Activity</h3>
-										<span>
-											<select onChange={this.OnChange}>
-												<option>2</option>
-												<option>5</option>
-												<option>10</option>
-											</select>
-										</span>
+										<div className="row">
+											<div className="col-sm-4">
+												Records size:
+												<select onChange={this.OnChange}>
+													<option>2</option>
+													<option>5</option>
+													<option>10</option>
+												</select>
+											</div>
+											<div className="col-sm-4"></div>
+											<div className="col-sm-4">
+												Group Name:
+												<select
+													name="group"
+													style={{ width: "100px" }}
+												></select>
+											</div>
+										</div>
 									</div>
 								</div>
 								{displayitems && displayitems.length > 0 ? (
 									<div>
-										{displayitems.map((activity) =>
-											activity.eventId === 1 ? (
-												<div
-													className="list-group list-group-horizontal"
-													key={activity._id}
-												>
-													<li
-														className="list-group-item"
-														style={{
-															fontFamily: "sans-serif",
-															fontSize: "20px",
-															width: "100%",
-														}}
+										{displayitems.map((activity) => {
+											if (activity.eventId === 1) {
+												return (
+													<div
+														className="list-group list-group-horizontal"
+														key={activity._id}
 													>
-														<strong>{activity.settlededBy}</strong> settled dues
-														of ${activity.amount} with{" "}
-														<strong>{activity.settleWithUser}</strong>
-													</li>
-												</div>
-											) : (
-												<div
-													className="list-group list-group-horizontal"
-													key={activity._id}
-												>
-													<li
-														className="list-group-item"
-														style={{
-															fontFamily: "sans-serif",
-															fontSize: "20px",
-															width: "100%",
-														}}
+														<li
+															className="list-group-item"
+															style={{
+																fontFamily: "sans-serif",
+																fontSize: "20px",
+																width: "100%",
+															}}
+														>
+															<strong>{activity.settlededBy}</strong> settled
+															dues of ${activity.amount} with{" "}
+															<strong>{activity.settleWithUser}</strong>
+														</li>
+													</div>
+												);
+											} else if (activity.eventId === 0) {
+												return (
+													<div
+														className="list-group list-group-horizontal"
+														key={activity._id}
 													>
-														<strong>{activity.paidBy}</strong> added an expense{" "}
-														<strong>"{activity.expDesc}"</strong> of amount $
-														{activity.amount} in{" "}
-														<strong>"{activity.groupName}"</strong>
-													</li>
-												</div>
-											)
-										)}
+														<li
+															className="list-group-item"
+															style={{
+																fontFamily: "sans-serif",
+																fontSize: "20px",
+																width: "100%",
+															}}
+														>
+															<strong>{activity.paidBy}</strong> added an
+															expense <strong>"{activity.expDesc}"</strong> of
+															amount ${activity.amount} in{" "}
+															<strong>"{activity.groupName}"</strong>
+														</li>
+													</div>
+												);
+											} else {
+												return (
+													<div className="list-group list-group-horizontal">
+														<li
+															className="list-group-item"
+															style={{
+																fontFamily: "sans-serif",
+																fontSize: "20px",
+																width: "100%",
+															}}
+														>
+															<strong>{activity.commentedBy} </strong>commented
+															on the expense{" "}
+															<strong>"{activity.expDesc}"</strong> in{" "}
+															<strong>"{activity.gName}"</strong> group : "
+															{activity.comment}"
+														</li>
+													</div>
+												);
+											}
+										})}
 									</div>
 								) : (
 									<h4 className="alert-success">No Recent Activity to show</h4>

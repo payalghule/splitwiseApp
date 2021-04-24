@@ -12,6 +12,8 @@ const Comments = (props) => {
 		console.log("props.expComments: ", props.expComments);
 		const commentData = {
 			message: commentText,
+			groupName: props.groupName,
+			expDesc: props.expDesc,
 			expId: props.expId,
 			userId: localStorage.getItem("userid"),
 			username: localStorage.getItem("username"),

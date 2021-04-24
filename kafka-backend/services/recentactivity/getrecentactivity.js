@@ -35,7 +35,7 @@ let handle_request = async (msg, callback) => {
 					};
 					console.log("actObj", actObj);
 					actData.push(actObj);
-				} else {
+				} else if (actList[i].eventId === 1) {
 					let actObj = {
 						settlededBy: user.username,
 						settleWithUser: settle.username,
@@ -45,7 +45,19 @@ let handle_request = async (msg, callback) => {
 						createdAt: actList[i].createdAt,
 						_id: actList[i]._id,
 					};
-					console.log("actObj", actObj);
+					console.log("actObj2", actObj);
+					actData.push(actObj);
+				} else if (actList[i].eventId === 2) {
+					let actObj = {
+						commentedBy: actList[i].commentedBy,
+						gName: actList[i].gName,
+						expDesc: actList[i].expDesc,
+						eventId: actList[i].eventId,
+						eventType: actList[i].eventType,
+						comment: actList[i].comment,
+						createdAt: actList[i].createdAt,
+					};
+					console.log("actObj3", actObj);
 					actData.push(actObj);
 				}
 			}

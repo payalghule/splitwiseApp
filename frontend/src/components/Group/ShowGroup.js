@@ -168,6 +168,7 @@ class ShowGroup extends Component {
 														<Comments
 															expId={exp.expId}
 															expComments={exp.comments}
+															expDesc={exp.expDesc}
 															groupName={this.state.groupName}
 															groupId={this.state.groupId}
 														/>

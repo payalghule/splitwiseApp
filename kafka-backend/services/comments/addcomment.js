@@ -1,5 +1,6 @@
 const Expense = require("../../Models/ExpenseModel");
 const mongoose = require("mongoose");
+const RecentActivity = require("../../Models/RecentActivityModel");
 
 let handle_request = async (msg, callback) => {
 	console.log("---------------Kafka backend :: Add comment----------------");
@@ -20,6 +21,19 @@ let handle_request = async (msg, callback) => {
 			}
 		);
 		if (added) {
+			let recent = new RecentActivity({
+				paidBy: msg.userId,
+				gName: msg.groupName,
+				expDesc: msg.expDesc,
+				commentedBy: msg.username,
+				eventId: "2",
+				eventType: "ADD_COMMENT",
+				comment: msg.message,
+			});
+
+			console.log("data to insert into recent activity is:", recent);
+			recent.save();
+
 			response.data = "COMMENT_ADDED";
 			response.status = 200;
 			return callback(null, response);
