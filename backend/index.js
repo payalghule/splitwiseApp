@@ -2,13 +2,13 @@
 const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const connectMongoDB = require("./database");
+connectMongoDB();
 const cors = require("cors");
 //const multer = require("multer");
 
 const bcrypt = require("bcrypt");
 const Config = require("./config");
-const connectMongoDB = require("./database");
-connectMongoDB();
 
 //var kafka = require('./kafka/client');
 

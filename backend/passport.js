@@ -2,25 +2,26 @@
 var JwtStrategy = require("passport-jwt").Strategy;
 var ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
-const Config = require("./config");
+var { secret } = require("./passconfig");
 const Users = require("./Models/UserModel");
 
 // Setup work and export for the JWT passport strategy
 function auth() {
+	console.log("-----In auth---");
 	var opts = {
 		jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
-		secretOrKey: Config.secret,
+		secretOrKey: secret,
 	};
 	passport.use(
 		new JwtStrategy(opts, (jwt_payload, callback) => {
-			console.log("jwtPayload is --------------------------- ", jwt_payload);
+			console.log("jwt_payload", jwt_payload);
 			const user_id = jwt_payload._id;
+			console.log("user_id: ", user_id);
 			Users.findById(user_id, (err, results) => {
 				if (err) {
 					return callback(err, false);
 				}
 				if (results) {
-					console.log("user result in passport is ---------------", results);
 					callback(null, results);
 				} else {
 					callback(null, false);

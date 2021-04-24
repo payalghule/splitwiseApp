@@ -30,6 +30,5 @@ function handle_request(message, callback) {
 			});
 		}
 	});
-	// callback(null, "something vague")
 }
 exports.handle_request = handle_request;

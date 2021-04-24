@@ -3,8 +3,9 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
 const jwt = require("jsonwebtoken");
-const Config = require("../config");
 const { auth } = require("../passport");
+const { secret } = require("../passconfig");
+
 auth();
 router.post("/", (req, res) => {
 	kafka.make_request("login", req.body, (err, result) => {
@@ -28,16 +29,17 @@ router.post("/", (req, res) => {
 				});
 				res.end("INCORRECT_PASSWORD");
 			} else {
-				const payload = { _id: result._id, email: result.email };
-				const token = jwt.sign(payload, `${Config.secret}`, {
+				const payload = { _id: result._id };
+				const token = jwt.sign(payload, secret, {
 					expiresIn: 1008000,
 				});
+				//req.session.user = result;
 				result.token = "JWT " + token;
-				res.cookie("cookie", "admin", {
-					maxAge: 900000,
-					httpOnly: false,
-					path: "/",
-				});
+				// res.cookie("cookie", result.username, {
+				// 	maxAge: 900000,
+				// 	httpOnly: false,
+				// 	path: "/",
+				// });
 				res.writeHead(200, {
 					"Content-Type": "applicaton/json",
 				});

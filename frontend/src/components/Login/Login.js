@@ -41,11 +41,18 @@ class Login extends Component {
 	render() {
 		let redirectVar = null;
 		let displayMessage = "";
+		let decode = "";
+		// if(this.props.user.token)
+		// {
+		// 	decode = jwt_decode(user.split(" ")[1]);
+		// }
+
 		console.log("this.props.user", this.props.user);
 		if (this.props.user && this.props.user._id) {
 			localStorage.setItem("userid", this.props.user._id);
 			localStorage.setItem("email", this.props.user.email);
 			localStorage.setItem("username", this.props.user.username);
+			localStorage.setItem("token", this.props.user.token);
 			console.log("Redirecting to home");
 			redirectVar = <Redirect to="/DashBoard" />;
 		} else if (this.props.user) {
