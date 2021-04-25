@@ -4,7 +4,6 @@ import { Modal } from "react-bootstrap";
 import axios from "axios";
 import backendServer from "../../backEndConfig";
 import { Multiselect } from "multiselect-react-dropdown";
-import swal from "sweetalert";
 
 function Settle(props) {
 	const [show, setShow] = useState(false);
