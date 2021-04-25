@@ -41,6 +41,7 @@ const addexpense = require("./services/expense/addexpense");
 const addcomment = require("./services/comments/addcomment");
 const deletecomment = require("./services/comments/deletecomment");
 const getgroupbalance = require("./services/group/getgroupbalance");
+const groupexit = require("./services/group/groupexit");
 
 function handleTopicRequest(topic_name, fname) {
 	var consumer = connection.getConsumer(topic_name);
@@ -125,3 +126,4 @@ handleTopicRequest("addexpense", addexpense);
 handleTopicRequest("addcomment", addcomment);
 handleTopicRequest("deletecomment", deletecomment);
 handleTopicRequest("getgroupbalance", getgroupbalance);
+handleTopicRequest("groupexit", groupexit);

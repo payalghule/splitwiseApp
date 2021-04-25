@@ -61,22 +61,23 @@ class ShowGroup extends Component {
 
 	onExitGroup = () => {
 		console.log("In Exit Group Handler");
-		const groupNameFromProps = this.props.match.params.groupName;
+		//const groupNameFromProps = this.props.match.params.groupName;
 		const userId = this.state.userId;
-		const exitData = { groupName: groupNameFromProps, exitUserId: userId };
+		const gId = this.state.groupId;
+		const exitData = { groupId: gId, exitUserId: userId };
 		console.log("exitData: ", exitData);
 		axios
 			.post(`${backendServer}/groups/groupexit`, exitData)
 			.then((response) => {
 				console.log("response from Axios query", response.data);
-				if (response.status == 200 && response.data.msg === "EXIT_SUCCESS") {
+				if (response.status == 200 && response.data.result === "EXIT_SUCCESS") {
 					alert("Exited the group Successfully");
 					//dashboard redirect
 					this.setState({
 						exitedGroup: 1,
 					});
 				}
-				if (response.status == 200 && response.data.msg === "CLEAR_DUES") {
+				if (response.status == 200 && response.data.result === "CLEAR_DUES") {
 					alert(
 						"You are involved in multiple activities, can not leave the group"
 					);

@@ -137,4 +137,24 @@ router.post("/getgroupexpense", async (req, res) => {
 	});
 });
 
+router.post("/groupexit", async (req, res) => {
+	console.log("Backend :: inside groupexit ::ShowGroups ");
+	console.log("req.body :", req.body);
+	kafka.make_request("groupexit", req.body, (err, results) => {
+		console.log("groupexit:", results);
+		if (err) {
+			console.log(err);
+			res.writeHead(err.status, {
+				"Content-Type": "text/plain",
+			});
+			res.end(err.data);
+		} else if (results) {
+			res.writeHead(results.status, {
+				"Content-Type": "text/plain",
+			});
+			res.end(results.data);
+		}
+	});
+});
+
 module.exports = router;
