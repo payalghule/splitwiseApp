@@ -16,6 +16,7 @@ import {
 } from "../../redux/actions/showGroupActions";
 import LeftSidebar from "../Layout/LeftSidebar";
 import noexp from "../../images/noexp.PNG";
+import GroupBalance from "./GroupBalance";
 import "../../App.css";
 
 //to show list of groups
@@ -129,7 +130,7 @@ class ShowGroup extends Component {
 									</div>
 								</div>
 								{groupExpense && groupExpense.length > 0 ? (
-									<div>
+									<div style={{ fontFamily: "Georgia" }}>
 										{groupExpense.map((exp) => (
 											<div className="list-group" key={exp.expId}>
 												<li
@@ -189,7 +190,9 @@ class ShowGroup extends Component {
 							</div>
 						</div>
 
-						<div className="col-sm-2"></div>
+						<div className="col-sm-2">
+							<GroupBalance groupId={this.state.groupId} />
+						</div>
 					</div>
 				</div>
 			</div>

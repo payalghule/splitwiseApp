@@ -40,6 +40,7 @@ const getrecentactivity = require("./services/recentactivity/getrecentactivity")
 const addexpense = require("./services/expense/addexpense");
 const addcomment = require("./services/comments/addcomment");
 const deletecomment = require("./services/comments/deletecomment");
+const getgroupbalance = require("./services/group/getgroupbalance");
 
 function handleTopicRequest(topic_name, fname) {
 	var consumer = connection.getConsumer(topic_name);
@@ -123,3 +124,4 @@ handleTopicRequest("getrecentactivity", getrecentactivity);
 handleTopicRequest("addexpense", addexpense);
 handleTopicRequest("addcomment", addcomment);
 handleTopicRequest("deletecomment", deletecomment);
+handleTopicRequest("getgroupbalance", getgroupbalance);

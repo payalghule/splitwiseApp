@@ -2,6 +2,7 @@
 const Expense = require("../../Models/ExpenseModel");
 const Balance = require("../../Models/BalancesModel");
 const RecentActivity = require("../../Models/RecentActivityModel");
+const GroupBalance = require("../../Models/GroupBalancesModel");
 let handle_request = async (msg, callback) => {
 	console.log("----------kafka backend: addexpense -----------");
 	console.log("Message received for addexpense kafka backend is:", msg);
@@ -62,6 +63,78 @@ let handle_request = async (msg, callback) => {
 						});
 
 						balance.save();
+					}
+				}
+			}
+		}
+
+		//to insert into GroupBalance Model
+
+		for (let i = 0; i < groupMembers.length; i++) {
+			if (groupMembers[i] !== paidBy) {
+				const amtResult = await GroupBalance.find(
+					{
+						borrower: groupMembers[i],
+						payableTo: paidBy,
+						groupId: msg.groupId,
+					},
+					{ pendingAmt: 1 }
+				);
+
+				if (amtResult.length > 0 && amtResult) {
+					console.log("amtResult pendingAmt: ", amtResult[0].pendingAmt);
+					//update pendingAmt +
+					let newAmt = amtResult[0].pendingAmt + splittedAmt;
+					let amountUpdate = await GroupBalance.updateOne(
+						{
+							borrower: groupMembers[i],
+							payableTo: paidBy,
+							groupId: msg.groupId,
+						},
+						{ $set: { pendingAmt: newAmt } }
+					);
+					if (amountUpdate) {
+						console.log("Pending Amount updated in Group Balance at place 1");
+					}
+				} else {
+					const amtResultRev = await GroupBalance.find(
+						{
+							borrower: paidBy,
+							payableTo: groupMembers[i],
+							groupId: msg.groupId,
+						},
+						{ pendingAmt: 1 }
+					);
+
+					if (amtResultRev.length > 0 && amtResultRev) {
+						console.log(
+							"amtResultRev pendingAmt: ",
+							amtResultRev[0].pendingAmt
+						);
+						//update pendingAmt -
+						let newAmt = amtResultRev[0].pendingAmt - splittedAmt;
+						let amountUpdate = await GroupBalance.updateOne(
+							{
+								borrower: paidBy,
+								payableTo: groupMembers[i],
+								groupId: msg.groupId,
+							},
+							{ $set: { pendingAmt: newAmt } }
+						);
+						if (amountUpdate) {
+							console.log("Pending Amount updated in Group Balance at place 2");
+						}
+					} else {
+						//insert new group balance entry here
+						let groupBal = new GroupBalance({
+							borrower: groupMembers[i],
+							payableTo: paidBy,
+							pendingAmt: amount / groupStrength,
+							groupId: msg.groupId,
+							groupName: msg.groupName,
+						});
+
+						groupBal.save();
 					}
 				}
 			}

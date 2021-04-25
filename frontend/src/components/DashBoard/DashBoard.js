@@ -8,6 +8,7 @@ import Settle from "../Expense/Settle";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getDashData } from "../../redux/actions/dashboardActions";
+import logo from "../../images/profilepic.PNG";
 import "../../App.css";
 
 class DashBoard extends Component {

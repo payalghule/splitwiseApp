@@ -55,7 +55,8 @@ class MyGroups extends Component {
 		const memData = { groupMember: this.state.userId };
 		console.log(groupData);
 		this.props.joinGroup(groupData);
-		this.groupLoad(memData);
+		window.location.reload();
+		//this.groupLoad(memData);
 	};
 
 	render() {

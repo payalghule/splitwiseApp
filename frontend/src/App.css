@@ -283,3 +283,9 @@ black-font {
 	height: 150px;
 	margin-top: 50px;
 }
+
+.grp-bal-pic {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
