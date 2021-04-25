@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
+import { connect } from "react-redux";
 import backendServer from "../../backEndConfig";
 import { Multiselect } from "multiselect-react-dropdown";
+import { getDashData } from "../../redux/actions/dashboardActions";
 
 function Settle(props) {
 	const [show, setShow] = useState(false);
@@ -21,6 +23,7 @@ function Settle(props) {
 			settlededById: localStorage.getItem("userid"),
 		};
 
+		const userData = { userid: localStorage.getItem("userid") };
 		console.log("settleData to post", settleData);
 
 		axios.defaults.withCredentials = true;
@@ -30,7 +33,8 @@ function Settle(props) {
 				console.log("response after Axios post", response);
 				if (response.status === 200) {
 					alert("Settled up sucessfully!");
-					window.location.reload(false);
+					//window.location.reload(false);
+					props.getDashData(userData);
 				}
 			})
 			.catch((error) => {
@@ -91,4 +95,5 @@ function Settle(props) {
 		</div>
 	);
 }
-export default Settle;
+//export default Settle;
+export default connect(null, { getDashData })(Settle);
