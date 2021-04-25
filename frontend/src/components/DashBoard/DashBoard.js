@@ -189,23 +189,31 @@ class DashBoard extends Component {
 								</div>
 							</div>
 
-							<div className="row summary">
+							<div className="row summary" style={{ fontFamily: "Georgia" }}>
 								<div className="col neg-bal">
 									<div className="row">
 										<div>
 											{youOwed && youOwed.length > 0 ? (
 												youOwed.map((blog) => (
-													<div
-														style={{
-															color: "red",
-															fontSize: "18px",
-															fontWeight: "bold",
-														}}
-													>
-														You owe {blog.payableTo} $
-														{(Math.round(blog.pendingAmt * 100) / 100).toFixed(
-															2
-														)}
+													<div>
+														<img
+															className="grp-bal-pic"
+															src={logo}
+															alt="logo"
+														/>{" "}
+														<strong>{blog.payableTo}</strong>
+														<div
+															style={{
+																color: "red",
+																fontSize: "18px",
+																fontWeight: "bold",
+															}}
+														>
+															You owe $
+															{(
+																Math.round(blog.pendingAmt * 100) / 100
+															).toFixed(2)}
+														</div>
 													</div>
 												))
 											) : (
@@ -222,17 +230,25 @@ class DashBoard extends Component {
 										<div>
 											{youAreOwed && youAreOwed.length > 0 ? (
 												youAreOwed.map((blog) => (
-													<div
-														style={{
-															color: "#5bc5a7",
-															fontSize: "18px",
-															fontWeight: "bold",
-														}}
-													>
-														{blog.borrower} owes $
-														{(Math.round(blog.pendingAmt * 100) / 100).toFixed(
-															2
-														)}
+													<div>
+														<img
+															className="grp-bal-pic"
+															src={logo}
+															alt="logo"
+														/>{" "}
+														<strong>{blog.borrower}</strong>
+														<div
+															style={{
+																color: "#5bc5a7",
+																fontSize: "18px",
+																fontWeight: "bold",
+															}}
+														>
+															owes you $
+															{(
+																Math.round(blog.pendingAmt * 100) / 100
+															).toFixed(2)}
+														</div>
 													</div>
 												))
 											) : (
