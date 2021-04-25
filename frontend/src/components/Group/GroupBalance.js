@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import backendServer from "../../backEndConfig";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getGroupBalance } from "../../redux/actions/groupBalanceActions";
 import logo from "../../images/profilepic.PNG";
 
 const GroupBalance = (props) => {
@@ -14,21 +17,24 @@ const GroupBalance = (props) => {
 
 	const fetchGroupBalance = () => {
 		if (groupId !== null) {
-			console.log("useeffect: groupId: ", groupId);
-			axios.defaults.withCredentials = true;
-			axios
-				.post(`${backendServer}/groupbalance/getgroupbalance`, {
-					groupId: groupId,
-				})
-				.then((response) => {
-					console.log("fetchGroupBalance: response after post", response);
-					if (response.status === 200) {
-						setBalanceData(response.data);
-					}
-				})
-				.catch((error) => {
-					console.log("error:", error);
-				});
+			// console.log("useeffect: groupId: ", groupId);
+			// axios.defaults.withCredentials = true;
+			// axios
+			// 	.post(`${backendServer}/groupbalance/getgroupbalance`, {
+			// 		groupId: groupId,
+			// 	})
+			// 	.then((response) => {
+			// 		console.log("fetchGroupBalance: response after post", response);
+			// 		if (response.status === 200) {
+			// 			setBalanceData(response.data);
+			// 		}
+			// 	})
+			// 	.catch((error) => {
+			// 		console.log("error:", error);
+			// 	});
+
+			const groupData = { groupId: groupId };
+			props.getGroupBalance(groupData);
 		}
 	};
 	// useEffect(() => {
@@ -44,7 +50,7 @@ const GroupBalance = (props) => {
 
 	return (
 		<div>
-			{balanceData && balanceData.length > 0 ? (
+			{props.groupBalData && props.groupBalData.length > 0 ? (
 				<div className="col list-group">
 					<div
 						className="row"
@@ -55,7 +61,7 @@ const GroupBalance = (props) => {
 						}}
 					>
 						<span style={{ color: "grey" }}>GROUP BALANCES</span>
-						{balanceData.map((bal) => {
+						{props.groupBalData.map((bal) => {
 							{
 								if (bal.pendingAmt > 0) {
 									return (
@@ -101,4 +107,13 @@ const GroupBalance = (props) => {
 	);
 };
 
-export default GroupBalance;
+//export default GroupBalance;
+
+GroupBalance.propTypes = {
+	getGroupBalance: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+	groupBalData: state.groupBalance.groupBalData,
+});
+
+export default connect(mapStateToProps, { getGroupBalance })(GroupBalance);

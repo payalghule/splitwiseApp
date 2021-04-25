@@ -6,6 +6,7 @@ import axios from "axios";
 import backendServer from "../../backEndConfig";
 import { connect } from "react-redux";
 import { getGroupExpense } from "../../redux/actions/showGroupActions";
+import { getGroupBalance } from "../../redux/actions/groupBalanceActions";
 
 function AddExpense(props) {
 	const [show, setShow] = useState(false);
@@ -60,6 +61,7 @@ function AddExpense(props) {
 				if (response.status === 200) {
 					alert("Expense added sucessfully!");
 					props.getGroupExpense(grpData);
+					props.getGroupBalance({ groupId: props.groupId });
 				}
 			})
 			.catch((error) => {
@@ -163,4 +165,4 @@ function AddExpense(props) {
 }
 //export default AddExpense;
 
-export default connect(null, { getGroupExpense })(AddExpense);
+export default connect(null, { getGroupExpense, getGroupBalance })(AddExpense);
