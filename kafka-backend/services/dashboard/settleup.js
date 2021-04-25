@@ -1,5 +1,6 @@
 const RecentActivity = require("../../Models/RecentActivityModel");
 const Balance = require("../../Models/BalancesModel");
+const GroupBalance = require("../../Models/GroupBalancesModel");
 
 let handle_request = async (msg, callback) => {
 	console.log("---------------Kafka backend :: settle up----------------");
@@ -8,6 +9,26 @@ let handle_request = async (msg, callback) => {
 	let response = {};
 	try {
 		let updated = await Balance.updateOne(
+			{
+				$and: [
+					{
+						$or: [
+							{ payableTo: msg.settlededById },
+							{ borrower: msg.settlededById },
+						],
+					},
+					{
+						$or: [
+							{ payableTo: msg.settleWithUserId },
+							{ borrower: msg.settleWithUserId },
+						],
+					},
+				],
+			},
+			{ $set: { pendingAmt: 0 } }
+		);
+
+		let grpBalUpdated = await GroupBalance.updateMany(
 			{
 				$and: [
 					{
@@ -37,7 +58,7 @@ let handle_request = async (msg, callback) => {
 		console.log("data to insert into recent activity is:", recent);
 		recent.save();
 
-		if (updated) {
+		if (updated && grpBalUpdated) {
 			response.data = "SETTLED_SUCCESS";
 			response.status = 200;
 			return callback(null, response);

@@ -7,6 +7,7 @@ import backendServer from "../../backEndConfig";
 import { connect } from "react-redux";
 import { getGroupExpense } from "../../redux/actions/showGroupActions";
 import { getGroupBalance } from "../../redux/actions/groupBalanceActions";
+import swal from "sweetalert";
 
 function AddExpense(props) {
 	const [show, setShow] = useState(false);
@@ -59,13 +60,13 @@ function AddExpense(props) {
 			.then((response) => {
 				console.log("response after post", response);
 				if (response.status === 200) {
-					alert("Expense added sucessfully!");
+					swal("Expense added sucessfully!", { icon: "success" });
 					props.getGroupExpense(grpData);
 					props.getGroupBalance({ groupId: props.groupId });
 				}
 			})
 			.catch((error) => {
-				alert("Failed to add expense");
+				swal("Failed to add expense", "error");
 				console.log("error:", error);
 			});
 		handleClose();
