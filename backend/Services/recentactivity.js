@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express();
 const kafka = require("../kafka/client");
-router.post("/getrecentactivity", async (req, res) => {
+const { checkAuth } = require("../passport");
+router.post("/getrecentactivity", checkAuth, async (req, res) => {
 	console.log("Backend ::inside getrecentactivity");
 	console.log("req body:", req.body);
 	kafka.make_request("getrecentactivity", req.body, (err, results) => {

@@ -55,6 +55,9 @@ function AddExpense(props) {
 		// console.log("data to post", expenseData);
 
 		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common["authorization"] = localStorage.getItem(
+			"token"
+		);
 		axios
 			.post(`${backendServer}/expense/addexpense`, expenseData)
 			.then((response) => {

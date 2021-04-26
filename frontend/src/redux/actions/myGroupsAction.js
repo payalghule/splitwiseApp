@@ -5,6 +5,9 @@ import axios from "axios";
 export const getAllGroups = (memData) => (dispatch) => {
 	console.log("Inside getallgroups actions");
 	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/groups/getallgroups`, memData)
 		.then((response) => {
@@ -22,6 +25,9 @@ export const getAllGroups = (memData) => (dispatch) => {
 export const joinGroup = (groupData) => (dispatch) => {
 	console.log("Inside joinGroup actions");
 	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/groups/joingroup`, groupData)
 		.then((response) => {

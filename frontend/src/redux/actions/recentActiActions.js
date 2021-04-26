@@ -5,6 +5,9 @@ import axios from "axios";
 export const getRecentActivity = (activityInfo) => (dispatch) => {
 	console.log("Inside getRecentActivity actions");
 	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/recentactivity/getrecentactivity`, activityInfo)
 		.then((response) => {

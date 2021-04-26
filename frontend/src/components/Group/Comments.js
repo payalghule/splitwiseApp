@@ -21,6 +21,9 @@ const Comments = (props) => {
 		const grpData = { gName: props.groupName, gId: props.groupId };
 		console.log("commentData is", commentData);
 		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common["authorization"] = localStorage.getItem(
+			"token"
+		);
 		axios
 			.post(`${backendServer}/comments/addcomment`, commentData)
 			.then((response) => {
@@ -50,6 +53,10 @@ const Comments = (props) => {
 				dangerMode: true,
 			}).then((willDelete) => {
 				if (willDelete) {
+					axios.defaults.withCredentials = true;
+					axios.defaults.headers.common["authorization"] = localStorage.getItem(
+						"token"
+					);
 					axios
 						.post(`${backendServer}/comments/deletecomment`, {
 							expId: props.expId,
@@ -85,6 +92,7 @@ const Comments = (props) => {
 							<textarea
 								name="commentText"
 								id="commentText"
+								required
 								col="60"
 								row="10"
 								style={{

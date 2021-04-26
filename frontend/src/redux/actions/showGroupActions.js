@@ -5,6 +5,9 @@ import axios from "axios";
 export const getGroupMembersData = (memData) => (dispatch) => {
 	console.log("Inside getGroupMembersData actions");
 	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/groups/getgroupmembs`, memData)
 		.then((response) => response.data)
@@ -23,6 +26,9 @@ export const getGroupMembersData = (memData) => (dispatch) => {
 export const getGroupExpense = (memData) => (dispatch) => {
 	console.log("Inside getGroupExpense actions");
 	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/groups/getgroupexpense`, memData)
 		.then((response) => response.data)

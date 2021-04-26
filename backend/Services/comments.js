@@ -2,7 +2,8 @@
 const express = require("express");
 const router = express();
 const kafka = require("../kafka/client");
-router.post("/addcomment", async (req, res) => {
+const { checkAuth } = require("../passport");
+router.post("/addcomment", checkAuth, async (req, res) => {
 	console.log("---------In Backend: Add comment---------");
 	console.log("req.body: ", req.body);
 	kafka.make_request("addcomment", req.body, (err, results) => {
@@ -22,7 +23,7 @@ router.post("/addcomment", async (req, res) => {
 	});
 });
 
-router.post("/deletecomment", async (req, res) => {
+router.post("/deletecomment", checkAuth, async (req, res) => {
 	console.log("---------In Backend: Delete comment---------");
 	console.log("req.body: ", req.body);
 

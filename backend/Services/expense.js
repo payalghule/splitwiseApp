@@ -2,8 +2,9 @@
 const express = require("express");
 const router = express();
 const kafka = require("../kafka/client");
+const { checkAuth } = require("../passport");
 
-router.post("/addexpense", async (req, res) => {
+router.post("/addexpense", checkAuth, async (req, res) => {
 	console.log("inside addexpense  backend");
 	console.log("req.body", req.body);
 	kafka.make_request("addexpense", req.body, (err, results) => {

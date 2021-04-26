@@ -27,6 +27,9 @@ function Settle(props) {
 		console.log("settleData to post", settleData);
 
 		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common["authorization"] = localStorage.getItem(
+			"token"
+		);
 		axios
 			.post(`${backendServer}/dashboard/settleup`, settleData)
 			.then((response) => {

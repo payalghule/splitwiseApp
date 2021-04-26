@@ -5,6 +5,9 @@ import axios from "axios";
 export const getGroupBalance = (memData) => (dispatch) => {
 	console.log("Inside getallgroups actions");
 	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/groupbalance/getgroupbalance`, memData)
 		.then((response) => {

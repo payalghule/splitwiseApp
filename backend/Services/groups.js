@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express();
 const kafka = require("../kafka/client");
+const { checkAuth } = require("../passport");
 
-router.post("/creategroup", (req, res) => {
+router.post("/creategroup", checkAuth, (req, res) => {
 	console.log("inside postmethod for create group backend");
 	console.log("req.body", req.body);
 
@@ -27,7 +28,7 @@ router.post("/creategroup", (req, res) => {
 	});
 });
 
-router.get("/getallusers", (req, res) => {
+router.get("/getallusers", checkAuth, (req, res) => {
 	console.log("inside get User details create groups in node backend");
 	kafka.make_request("getallusers", req.body, (err, result) => {
 		console.log("user details:", result);
@@ -50,7 +51,7 @@ router.get("/getallusers", (req, res) => {
 	});
 });
 
-router.post("/getallgroups", (req, res) => {
+router.post("/getallgroups", checkAuth, (req, res) => {
 	console.log("Backend :: inside getallgroups ::MyGroups ");
 	console.log("req.body :", req.body);
 	kafka.make_request("getallgroups", req.body, (err, result) => {
@@ -74,7 +75,7 @@ router.post("/getallgroups", (req, res) => {
 	});
 });
 
-router.post("/joingroup", (req, res) => {
+router.post("/joingroup", checkAuth, (req, res) => {
 	console.log("Backend :: inside joingroup ::MyGroups ");
 	kafka.make_request("joingroup", req.body, (err, result) => {
 		console.log("group details:", result);
@@ -97,7 +98,7 @@ router.post("/joingroup", (req, res) => {
 	});
 });
 
-router.post("/getgroupmembs", async (req, res) => {
+router.post("/getgroupmembs", checkAuth, async (req, res) => {
 	console.log("Backend :: inside getgroupmembs ::ShowGroups ");
 	console.log("req.body :", req.body);
 	kafka.make_request("getgroupmembs", req.body, (err, results) => {
@@ -117,7 +118,7 @@ router.post("/getgroupmembs", async (req, res) => {
 	});
 });
 
-router.post("/getgroupexpense", async (req, res) => {
+router.post("/getgroupexpense", checkAuth, async (req, res) => {
 	console.log("Backend :: inside getgroupexpense ::ShowGroups ");
 	console.log("req.body :", req.body);
 	kafka.make_request("getgroupexpense", req.body, (err, results) => {
@@ -137,7 +138,7 @@ router.post("/getgroupexpense", async (req, res) => {
 	});
 });
 
-router.post("/groupexit", async (req, res) => {
+router.post("/groupexit", checkAuth, async (req, res) => {
 	console.log("Backend :: inside groupexit ::ShowGroups ");
 	console.log("req.body :", req.body);
 	kafka.make_request("groupexit", req.body, (err, results) => {

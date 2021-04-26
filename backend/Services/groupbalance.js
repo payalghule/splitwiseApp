@@ -2,8 +2,9 @@
 const express = require("express");
 const router = express();
 const kafka = require("../kafka/client");
+const { checkAuth } = require("../passport");
 
-router.post("/getgroupbalance", async (req, res) => {
+router.post("/getgroupbalance", checkAuth, async (req, res) => {
 	console.log("Backend :: inside getgroupBalance ::ShowGroups ");
 	console.log("req.body :", req.body);
 	kafka.make_request("getgroupbalance", req.body, (err, results) => {
