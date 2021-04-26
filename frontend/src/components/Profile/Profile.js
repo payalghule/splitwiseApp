@@ -111,6 +111,9 @@ class Profile extends Component {
 		let redirectVar = null;
 
 		let imageSrc;
+		if (!localStorage.getItem("token")) {
+			redirectVar = <Redirect to="/Login" />;
+		}
 
 		if (this.state) {
 			imageSrc = `${backendServer}/images/${this.state.user_image}`;

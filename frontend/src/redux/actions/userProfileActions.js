@@ -3,6 +3,10 @@ import backendServer from "../../backEndConfig";
 import axios from "axios";
 
 export const getUser = (user) => (dispatch) => {
+	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/profile/getuserprofile`, user)
 		.then((response) => {
@@ -19,6 +23,9 @@ export const getUser = (user) => (dispatch) => {
 
 export const updateUser = (userProfileData) => (dispatch) => {
 	axios.defaults.withCredentials = true;
+	axios.defaults.headers.common["authorization"] = localStorage.getItem(
+		"token"
+	);
 	axios
 		.post(`${backendServer}/profile/updateuser`, userProfileData)
 		.then((response) => {

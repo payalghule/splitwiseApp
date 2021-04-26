@@ -96,6 +96,9 @@ class ShowGroup extends Component {
 		let gName = this.state.groupName;
 		let redirectVar = null;
 		let groupExpense = this.props.groupExpenses;
+		if (!localStorage.getItem("token")) {
+			redirectVar = <Redirect to="/Login" />;
+		}
 		if (this.state.exitedGroup === 1) {
 			redirectVar = <Redirect to="/MyGroups" />;
 		}

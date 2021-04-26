@@ -4,6 +4,7 @@ import NavbarDashBoard from "../Layout/NavbarDashboard";
 import backendServer from "../../backEndConfig";
 import axios from "axios";
 import LeftSidebar from "../Layout/LeftSidebar";
+import { Redirect } from "react-router";
 import PropTypes from "prop-types";
 import { Pagination } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -51,6 +52,10 @@ class RecentActivity extends Component {
 	}
 
 	render() {
+		let redirectVar = null;
+		if (!localStorage.getItem("token")) {
+			redirectVar = <Redirect to="/Login" />;
+		}
 		let paginationItemsTag = [];
 		let items = this.state.activity;
 		let pgSize = this.state.pageSize;
@@ -91,6 +96,7 @@ class RecentActivity extends Component {
 		}
 		return (
 			<div className="dashboard">
+				{redirectVar}
 				<NavbarDashBoard />
 				<div className="container">
 					<div className="row">

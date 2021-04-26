@@ -5,6 +5,7 @@ import NavbarDashBoard from "../Layout/NavbarDashboard";
 import LeftSidebar from "../Layout/LeftSidebar";
 import backendServer from "../../backEndConfig";
 import axios from "axios";
+import { Redirect } from "react-router";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllGroups, joinGroup } from "../../redux/actions/myGroupsAction";
@@ -60,6 +61,10 @@ class MyGroups extends Component {
 	};
 
 	render() {
+		let redirectVar = null;
+		if (!localStorage.getItem("token")) {
+			redirectVar = <Redirect to="/Login" />;
+		}
 		console.log("this.state.allGroupData: ", this.state.allGroupData);
 		let list = this.state.allGroupData;
 		const { search } = this.state;
@@ -70,6 +75,7 @@ class MyGroups extends Component {
 
 		return (
 			<div className="dashboard">
+				{redirectVar}
 				<NavbarDashBoard />
 				<div className="container">
 					<div className="row">

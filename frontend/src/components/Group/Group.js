@@ -95,6 +95,9 @@ class Group extends Component {
 	render() {
 		let details = this.state.userData;
 		let redirectVar = null;
+		if (!localStorage.getItem("token")) {
+			redirectVar = <Redirect to="/Login" />;
+		}
 		console.log(
 			"group creation status:",
 			this.props.groupCreation,

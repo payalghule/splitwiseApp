@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express();
 const kafka = require("../kafka/client");
-//const { checkAuth } = require("../passport");
+const { checkAuth } = require("../passport");
 
-router.post("/getdashdata", async (req, res) => {
+router.post("/getdashdata", checkAuth, async (req, res) => {
 	console.log("Backend:: inside getdashdata");
 	console.log("req.body :", req.body);
 	kafka.make_request("getdashdata", req.body, (err, results) => {
@@ -23,7 +23,7 @@ router.post("/getdashdata", async (req, res) => {
 	});
 });
 
-router.post("/settleup", (req, res) => {
+router.post("/settleup", checkAuth, (req, res) => {
 	console.log("inside settle up backend");
 	const settleWithUserId = req.body.settleWithUserId;
 	const settlededById = req.body.settlededById;

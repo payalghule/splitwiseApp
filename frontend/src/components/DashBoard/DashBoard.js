@@ -8,6 +8,7 @@ import Settle from "../Expense/Settle";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getDashData } from "../../redux/actions/dashboardActions";
+import { Redirect } from "react-router";
 import logo from "../../images/profilepic.PNG";
 import "../../App.css";
 
@@ -43,12 +44,16 @@ class DashBoard extends Component {
 	// };
 
 	render() {
+		let redirectVar = null;
 		// let dashBoardData = this.state.dashData;
 		// console.log("dashBoardData: ", dashBoardData);
 		// let youAreOwed = this.state.dashData.youAreOwed;
 		// console.log("youAreOwed: ", youAreOwed);
 		// let youOwed = this.state.dashData.youOwe;
 		// console.log("youOwed: ", youOwed);
+		if (!localStorage.getItem("token")) {
+			redirectVar = <Redirect to="/Login" />;
+		}
 
 		let dashBoardData = this.props.dashboardData;
 		console.log("dashBoardData: ", dashBoardData);
@@ -72,6 +77,7 @@ class DashBoard extends Component {
 		let TotalBalance = TotalOwed - TotalOwe;
 		return (
 			<div className="dashboard">
+				{redirectVar}
 				<NavbarDashBoard />
 				<div className="container">
 					<div className="row">
