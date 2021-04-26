@@ -47,6 +47,7 @@ class SignUp extends Component {
 				localStorage.setItem("userid", this.props.user.userid);
 				localStorage.setItem("email", this.props.user.email);
 				localStorage.setItem("username", this.props.user.username);
+				localStorage.setItem("token", this.props.user.token);
 				redirectVar = <Redirect to="/DashBoard" />;
 			} else if (this.props.user === "EMAIL_EXIST" && this.state.signupFlag) {
 				displayMessage =

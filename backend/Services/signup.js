@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const kafka = require("../kafka/client");
+const jwt = require("jsonwebtoken");
+const { auth } = require("../passport");
+const { secret } = require("../passconfig");
+auth();
 
 //exports.UserSignUp = (req, res) =>
 router.post("/", (req, res) => {
@@ -16,6 +20,11 @@ router.post("/", (req, res) => {
 			});
 			res.end("EMAIL_EXIST");
 		} else {
+			const payload = { _id: result.userid };
+			const token = jwt.sign(payload, secret, {
+				expiresIn: 1008000,
+			});
+			result.token = "JWT " + token;
 			res.writeHead(200, {
 				"Content-Type": "text/plain",
 			});
