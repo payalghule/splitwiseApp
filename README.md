@@ -1,5 +1,8 @@
 # splitwise-app prototype
 
+# How to set up this project ? 
+### Please follow below steps:
+
 Git clone the splitwise repository.
 
 ## Back End
@@ -27,22 +30,35 @@ Open the browser and navigate to Front end server's IP address with Port number 
 
 ## Application Screenshots: 
 
-![image](https://user-images.githubusercontent.com/76183832/116167966-4661b800-a6b6-11eb-8c53-78d0ccb7affa.png)
+### Landing Page: 
+![image](https://user-images.githubusercontent.com/76183832/116168177-b1ab8a00-a6b6-11eb-90f3-ba3bc89e989f.png)
 
-![image](https://user-images.githubusercontent.com/76183832/116167976-4bbf0280-a6b6-11eb-929a-551e3d4eeac8.png)
+### Login Page:
+![image](https://user-images.githubusercontent.com/76183832/116168203-c1c36980-a6b6-11eb-90b1-cf7e61435200.png)
 
-![image](https://user-images.githubusercontent.com/76183832/116168053-71e4a280-a6b6-11eb-9ad8-b914ebace103.png)
+### Dashboard Page:
+![image](https://user-images.githubusercontent.com/76183832/116168220-cbe56800-a6b6-11eb-885d-80184131fd9c.png)
+
+### Create Group Page:
+![image](https://user-images.githubusercontent.com/76183832/116168254-d869c080-a6b6-11eb-94d2-dfc23264ba7a.png)
+
+### Expense Page:
+![image](https://user-images.githubusercontent.com/76183832/116168278-e4558280-a6b6-11eb-8909-afe6dcb79a0f.png)
+![image](https://user-images.githubusercontent.com/76183832/116168288-e91a3680-a6b6-11eb-957b-d10e97eb3b12.png)
+![image](https://user-images.githubusercontent.com/76183832/116168298-ed465400-a6b6-11eb-84e1-d1aeb57661e4.png)
+![image](https://user-images.githubusercontent.com/76183832/116168312-f2a39e80-a6b6-11eb-8412-d91673728c5c.png)
+
+### Recent Activity:
+![image](https://user-images.githubusercontent.com/76183832/116168326-fb947000-a6b6-11eb-8f41-e7e5c08e4d42.png)
 
 
-![image](https://user-images.githubusercontent.com/76183832/116167981-4feb2000-a6b6-11eb-8a37-71fe91b00901.png)
 
-![image](https://user-images.githubusercontent.com/76183832/116168039-6abd9480-a6b6-11eb-868b-d4582001093b.png)
 
-![image](https://user-images.githubusercontent.com/76183832/116167994-56799780-a6b6-11eb-8569-2c156befa260.png)
 
-![image](https://user-images.githubusercontent.com/76183832/116168005-5bd6e200-a6b6-11eb-880f-4399d542f5c3.png)
 
-![image](https://user-images.githubusercontent.com/76183832/116168020-64c7b380-a6b6-11eb-9ff4-3df2ac34f14e.png)
+
+
+
 
 
 
