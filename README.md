@@ -1,7 +1,9 @@
 # splitwise-app prototype
 
-# How to set up this project ? 
-### Please follow below steps:
+# Tech Stack: ReactJS, Redux, MongoDB, Kafka and Passport-JWT 
+
+### How to set up this project ? 
+> Please follow below steps:
 
 Git clone the splitwise repository.
 
