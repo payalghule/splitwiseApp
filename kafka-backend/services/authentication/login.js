@@ -22,7 +22,17 @@ function handle_request(message, callback) {
 					callback(null, 500);
 				} else {
 					if (isPasswordTrue) {
-						callback(null, user);
+						let userData = {
+							phone: user.phone,
+							currency: user.currency,
+							timezone: user.timezone,
+							language: user.language,
+							_id: user._id,
+							email: user.email,
+							username: user.username,
+							user_image: user.user_image,
+						};
+						callback(null, userData);
 					} else {
 						callback(null, 209);
 					}

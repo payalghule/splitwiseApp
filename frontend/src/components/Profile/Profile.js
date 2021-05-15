@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 //import profilepic from '../../images/profilepic.PNG';
 import NavbarDashBoard from "../Layout/NavbarDashboard";
 import backendServer from "../../backEndConfig";
@@ -245,6 +245,12 @@ class Profile extends Component {
 												<option value="Hindi">Hindi</option>
 											</select>
 										</div>
+										<Link
+											to="/DashBoard"
+											className="green-button float-md-left"
+										>
+											Go to Dashboard
+										</Link>
 										<button type="submit" className="green-button float-right">
 											Save
 										</button>

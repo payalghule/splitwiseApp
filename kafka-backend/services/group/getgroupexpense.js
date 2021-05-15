@@ -9,34 +9,35 @@ let handle_request = async (msg, callback) => {
 	let response = {};
 	let expArray = [];
 	try {
-		let expResult = await Expense.find({
+		const expResult = await Expense.find({
 			groupId: msg.gId,
 			groupName: msg.gName,
-		}).sort({ createdAt: -1 });
+		})
+			.populate({
+				path: "paidBy",
+				select: "username",
+			})
+			.sort({ createdAt: -1 });
 		//console.log("expResult: ", expResult);
+		//console.log("expResult username populate: ", expResult[0].paidBy.username);
+
 		if (expResult && expResult.length > 0) {
 			for (let i = 0; i < expResult.length; i++) {
-				let paidByUser = await Users.findById(expResult[i].paidBy).populate(
-					"paidBy"
-				);
-				if (paidByUser) {
-					console.log("paidByUser is: ", paidByUser.username);
-					let obj = {
-						paidBy: expResult[i].paidBy,
-						expDesc: expResult[i].expDesc,
-						amount: expResult[i].amount,
-						createdAt: expResult[i].createdAt,
-						borrowers: expResult[i].borrowers,
-						paidbyUser: paidByUser.username,
-						expId: expResult[i]._id,
-						comments: expResult[i].comments,
-						groupId: expResult[i].groupId,
-						groupName: expResult[i].groupName,
-					};
+				let obj = {
+					paidBy: expResult[i].paidBy._id,
+					expDesc: expResult[i].expDesc,
+					amount: expResult[i].amount,
+					createdAt: expResult[i].createdAt,
+					borrowers: expResult[i].borrowers,
+					paidbyUser: expResult[i].paidBy.username,
+					expId: expResult[i]._id,
+					comments: expResult[i].comments,
+					groupId: expResult[i].groupId,
+					groupName: expResult[i].groupName,
+				};
 
-					//console.log("obj is", obj);
-					expArray.push(obj);
-				}
+				//console.log("obj is", obj);
+				expArray.push(obj);
 			}
 		}
 		console.log("expArray is", expArray);

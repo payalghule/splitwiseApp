@@ -45,7 +45,20 @@ function handle_request(msg, callback) {
 							}
 							console.log("Successfully Updated");
 							//callback(null, 200);
-							callback(null, user);
+							let userData = {
+								phone: user.phone,
+								currency: user.currency,
+								timezone: user.timezone,
+								language: user.language,
+								_id: user._id,
+								email: user.email,
+								username: user.username,
+								user_image: user.user_image,
+							};
+
+							console.log("data sent back is: ", userData);
+
+							callback(null, userData);
 						});
 					}
 				}

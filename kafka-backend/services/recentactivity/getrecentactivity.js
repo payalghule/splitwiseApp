@@ -11,20 +11,27 @@ let handle_request = async (msg, callback) => {
 	let response = {};
 	let actData = [];
 	try {
-		let actList = await RecentActivity.find({}).sort({ createdAt: -1 });
+		let actList = await RecentActivity.find({})
+			.populate([
+				{
+					path: "paidBy",
+					select: "username",
+				},
+				{
+					path: "settleWithUserId",
+					select: "username",
+				},
+			])
+			.sort({ createdAt: -1 });
+		console.log("actList is: ", actList);
 
 		if (actList) {
 			console.log("length", actList.length);
 
 			for (let i = 0; i < actList.length; i++) {
-				await actList[i].populate("paidBy settleWithUserId").execPopulate();
-
-				let user = await Users.findById(actList[i].paidBy);
-				let settle = await Users.findById(actList[i].settleWithUserId);
-
 				if (actList[i].eventId === 0) {
 					let actObj = {
-						paidBy: user.username,
+						paidBy: actList[i].paidBy.username,
 						groupName: actList[i].groupName,
 						expDesc: actList[i].expDesc,
 						amount: actList[i].amount,
@@ -37,8 +44,8 @@ let handle_request = async (msg, callback) => {
 					actData.push(actObj);
 				} else if (actList[i].eventId === 1) {
 					let actObj = {
-						settlededBy: user.username,
-						settleWithUser: settle.username,
+						settlededBy: actList[i].paidBy.username,
+						settleWithUser: actList[i].settleWithUserId.username,
 						amount: actList[i].amount,
 						eventId: actList[i].eventId,
 						eventType: actList[i].eventType,

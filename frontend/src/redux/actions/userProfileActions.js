@@ -31,6 +31,8 @@ export const updateUser = (userProfileData) => (dispatch) => {
 		.then((response) => {
 			console.log("response for update profile is", response);
 			if (response.status === 200) {
+				console.log("updated username is : ", userProfileData.username);
+				localStorage.setItem("username", userProfileData.username);
 				alert("User Profile updated successfully!");
 			} else if (response.status === 209) {
 				alert("Update Failed! Please Try Again");

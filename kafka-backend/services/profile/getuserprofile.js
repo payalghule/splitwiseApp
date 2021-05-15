@@ -9,8 +9,18 @@ function handle_request(message, callback) {
 		} else if (user == null) {
 			callback(null, 207);
 		} else if (user !== null) {
-			console.log("In Kafka backend ::User found: ", user);
-			callback(null, user);
+			let userData = {
+				phone: user.phone,
+				currency: user.currency,
+				timezone: user.timezone,
+				language: user.language,
+				_id: user._id,
+				email: user.email,
+				username: user.username,
+				user_image: user.user_image,
+			};
+			console.log("In Kafka backend ::User found: ", userData);
+			callback(null, userData);
 		}
 	});
 }
